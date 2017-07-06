@@ -9,57 +9,165 @@
         margin: 0;
         padding: 0;
       }
-
-      .container {
+      .main-container {
         height: 100%;
         position: relative;
       }
-
       input {
         font-size: 12px;
       }
-
       h1 {
         color: #525454;
         font-size: 22px;
         margin: 0 0 10px 0;
         text-align: center;
       }
-
       #hide-listings,
       #show-listings {
         width: 48%;
       }
-
       #map {
-        bottom:0px;
+        bottom:3px;
         height: 100%;
         left: 362px;
         position: absolute;
         right: 0px;
       }
-
       .options-box {
         background: #fff;
         border: 1px solid #999;
         border-radius: 3px;
-        height: 100%;
+        height: 94%;
         line-height: 35px;
         padding: 10px 10px 30px 10px;
         text-align: left;
         width: 340px;
       }
+      .bgimg {
+          position:fixed;
+          top: 0;
+          left: 0;
+          width:100%;
+          z-index:-1;
+          opacity:1;
+      }
+      .wikipedia-container {
+        float:right;
+        width:290px;
+        padding:10px;
+        margin-right: 10px;
+        background-color: rgba(255,255,255,0.7);
+      }
+      .nytimes-container {
+        padding: 10px;
+        margin-right:300px;
+        background-color: rgba(255,255,255,0.7);
+      }
+      .weather-underground-container {
+        font-size: 12px;
+      }
+      .article-list {
+        margin: 0;
+        padding: 0;
+      }
+      .weather-list {
+        margin: 0;
+        padding: 0;
+      }
+      .article {
+        list-style-type: none;
+        padding:10px;
+        border-top: 1px solid #CCC;
+      }
+      .article:first-child {
+        border-top:none;
+      }
     </style>
   </head>
   <body>
-    <div class="container">
+    <div class="main-container">
       <div class="options-box">
-        <h1>Find Your New Mountain View Home</h1>
+        <h1>Find Your New Mountain View, California Home</h1>
         <div>
           <input id="show-listings" type="button" value="Show Listings">
           <input id="hide-listings" type="button" value="Hide Listings">
+
+          <form id="form-container" class="form-container">
+            <label for="street">Street: </label><input type="text" id="street" value="">
+            <br>
+            <label for="city">City: </label><input type="text" id="city" value="">
+            <label for="state">State: </label>
+            <select id="state" name="state" value="">
+              <option value="CA">CA</option>
+              <option value="AL">AL</option>
+              <option value="AK">AK</option>
+              <option value="AZ">AZ</option>
+              <option value="AR">AR</option>
+              <option value="CO">CO</option>
+              <option value="CT">CT</option>
+              <option value="DE">DE</option>
+              <option value="DC">DC</option>
+              <option value="FL">FL</option>
+              <option value="GA">GA</option>
+              <option value="HI">HI</option>
+              <option value="ID">ID</option>
+              <option value="IL">IL</option>
+              <option value="IN">IN</option>
+              <option value="IA">IA</option>
+              <option value="KS">KS</option>
+              <option value="KY">KY</option>
+              <option value="LA">LA</option>
+              <option value="ME">ME</option>
+              <option value="MD">MD</option>
+              <option value="MA">MA</option>
+              <option value="MI">MI</option>
+              <option value="MN">MN</option>
+              <option value="MS">MS</option>
+              <option value="MO">MO</option>
+              <option value="MT">MT</option>
+              <option value="NE">NE</option>
+              <option value="NV">NV</option>
+              <option value="NH">NH</option>
+              <option value="NJ">NJ</option>
+              <option value="NM">NM</option>
+              <option value="NY">NY</option>
+              <option value="NC">NC</option>
+              <option value="ND">ND</option>
+              <option value="OH">OH</option>
+              <option value="OK">OK</option>
+              <option value="OR">OR</option>
+              <option value="PA">PA</option>
+              <option value="RI">RI</option>
+              <option value="SC">SC</option>
+              <option value="SD">SD</option>
+              <option value="TN">TN</option>
+              <option value="TX">TX</option>
+              <option value="UT">UT</option>
+              <option value="VT">VT</option>
+              <option value="VA">VA</option>
+              <option value="WA">WA</option>
+              <option value="WV">WV</option>
+              <option value="WI">WI</option>
+              <option value="WY">WY</option>
+            </select>
+            <br>
+            <button id="submit-btn">Submit</button>
+          </form>
+
+          <div class = "weather-underground-container">
+            <h3 id ="weather-underground-header"> find weather forecast here!
+            <ul id="weather-underground-forecast" class="weather-list">What's the weather forecast? Weather Underground will tell you here!</ul>
+          </div>
         </div>
       </div>
+      <div class="wikipedia-container">
+        <h3 id="wikipedia-header">Relevant Wikipedia Links</h3>
+        <ul id="wikipedia-links">find relevant Wikipedia articles here!</ul>
+    </div>
+    <div class="nytimes-container">
+        <h3 id="nytimes-header">New York Times Articles</h3>
+        <ul id="nytimes-articles" class="article-list">What's going on in your new city? The NY Times will tell you here!</ul>
+    </div>
       <div id="map"></div>
     </div>
     <script>
@@ -247,11 +355,16 @@
         return markerImage;
       }
 
-    </script>
 
-    <script async defer
+
+    </script>
+    <script src="js/libs/jquery.min.js"></script>
+    <script src="js/script.js"></script>
+    <script 
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&v=3&callback=initMap">
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
 
   </body>
 </html>
