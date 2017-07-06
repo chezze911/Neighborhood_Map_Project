@@ -26,26 +26,24 @@ function loadData() {
 
 
     // weather underground AJAX request goes here
-    var weatherundergroundUrl = "http://api.wunderground.com/api/65646c8c86b0eefe/forecast/q/" + stateStr  + "/" + cityStr + ".json"
+    // append weather forecast for Mountain View, CA to wuElem, weather-underground-forecast
+    // display error messsage if we cannot get JSON
+    var weatherundergroundUrl = "http://api.wunderground.com/api/65646c8c86b0eefe/conditions/q/" + stateStr  + "/" + cityStr + ".json";
 
-    jQuery(document).ready(function($) {
+    $.getJSON(weatherundergroundUrl, function(data) {  
+      
+      $wuHeaderElem.text('The curent weather in ' + cityStr + ':');
+      var conditions = $wuElem;
+      info = data.current_observation;
+      conditions.append('<li> Temperature: ' + info.temp_f + '°F' + ' / ' + info.temp_c + '°C</li>');
+    }).error(function(e){
+        $wuHeaderElem.text("Sorry, weather underground could not be loaded. Please try again.");
+    });
 
-      $wuHeaderElem.text('Current Weather in ' + cityStr);
-
-      $.ajax({
-      url : weatherundergroundUrl,
-      dataType : "jsonp",
-      success : function(url) {
-      var location = url[stateStr][cityStr];
-      var temp_f = url['current_observation']['temp_f'];
-      alert("Current temperature in " + location + " is: " + temp_f);
-      }
-  });
-});
 
     // nytimes AJAX request goes here
 
-    var nytimesUrl = 'http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + cityStr + '&sort=newest&api-key=3bfc87ca82bb435fa1dd7b941c229aa6'
+    var nytimesUrl = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + cityStr + '&sort=newest&api-key=3bfc87ca82bb435fa1dd7b941c229aa6";
 
     $.getJSON(nytimesUrl, function(data) {
 
