@@ -86,6 +86,13 @@
         padding:10px;
         border-top: 1px solid #CCC;
       }
+      #street {
+        position: relative;
+        width: 70%;
+      }
+      #zoom-to-area {
+        width: 24%;
+      }
       .article:first-child {
         border-top:none;
       }
@@ -98,7 +105,7 @@
         <div>
           <input id="show-listings" type="button" value="Show Listings">
           <input id="hide-listings" type="button" value="Hide Listings">
-
+          <hr>
           <form id="form-container" class="form-container">
             <label for="street">Street: </label><input type="text" id="street" value="">
             <br>
@@ -159,7 +166,11 @@
             </select>
             <br>
             <button id="submit-btn">Submit</button>
+            <div>
+            <input id="zoom-to-area" type="button" value="Zoom">
+          </div>
           </form>
+
 
           <div class = "weather-underground-container">
             <h3 id ="weather-underground-header"> Find the current weather here!
@@ -388,6 +399,34 @@
         document.getElementById('hide-listings').addEventListener('click', hideListings);
       }
 
+        document.getElementById('zoom-to-area').addEventListener('click', function() {
+          zoomToArea();
+        });
+      // This function takes the input value in the find nearby area text input
+      // locates it, and then zooms into that area.  This is so that the user can show all listings, then decide to focus on one area of the map.  
+      function zoomToArea() {
+        // Initialize the geocoder.
+        var geocoder = new google.maps.Geocoder();
+        // Get the address or place that the user entered.
+        var address = document.getElementById('city').value;
+        // Make sure the address isn't blank.
+        if (address == '') {
+          window.alert('You must enter an area or address.');
+        } else {
+          // Geocode the address/area entered to get the center.  Then, center the map on it and zoom in.  
+          geocoder.geocode(
+          {address: address,
+            componentRestrictions: {locality: 'Mountain View'}
+          }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              map.setCenter(results[0].geometry.location);
+              map.setZoom(15);
+            } else {
+              window.alert('We counld not find that location - try entering a more' + ' specific place.');
+            }
+          });
+        }
+      }
       // This function populates the infowindow when the marker is clicked. We'll only allow
       // one infowindow which will open at the marker that is clicked, and populate based
       // on that markers position.
