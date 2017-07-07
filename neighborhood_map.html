@@ -107,11 +107,12 @@
           <input id="hide-listings" type="button" value="Hide Listings">
           <hr>
           <form id="form-container" class="form-container">
-            <label for="street">Street: </label><input type="text" id="street" value="">
+            <label for="street">Street: </label><input type="text" id="street" placeholder="Enter desired address!"value="">
             <br>
-            <label for="city">City: </label><input type="text" id="city" value="">
+            <label for="city">City: </label><input type="text" id="city" placeholder ="Enter City" value="">
             <label for="state">State: </label>
             <select id="state" name="state" value="">
+              <option value ="">  </option>
               <option value="CA">CA</option>
               <option value="AL">AL</option>
               <option value="AK">AK</option>
@@ -166,9 +167,8 @@
             </select>
             <br>
             <button id="submit-btn">Submit</button>
-            <div>
             <input id="zoom-to-area" type="button" value="Zoom">
-          </div>
+          <hr>
           </form>
 
 
@@ -176,6 +176,7 @@
             <h3 id ="weather-underground-header"> Find the current weather here!
             <h3 id="weather-underground-forecast" class="weather-list">Weather Underground will tell you here!</h3>
           </div>
+          <hr>
         </div>
       </div>
       <div class="wikipedia-container">
@@ -345,6 +346,13 @@
           mapTypeControl: false
         });
 
+        // this autocomplete is for use in the search within street entry box.
+        var streetAutocomplete = new google.maps.places.Autocomplete(document.getElementById('street'));
+        // This autocomplete is for use in the geocoder city entry box.
+        var zoomAutocomplete = new google.maps.places.Autocomplete(document.getElementById('city'));
+        // Bias the boundaries within the map for the city entry box text.
+        zoomAutocomplete.bindTo('bounds', map);
+
         // These are the real estate listings that will be shown to the user.
         // Normally we'd have these in a database instead.
         var locations = [
@@ -408,10 +416,17 @@
         // Initialize the geocoder.
         var geocoder = new google.maps.Geocoder();
         // Get the address or place that the user entered.
-        var address = document.getElementById('city').value;
-        // Make sure the address isn't blank.
-        if (address == '') {
-          window.alert('You must enter an area or address.');
+        var street = document.getElementById('street').value;
+
+        var city = document.getElementById('city').value;
+
+        var state = document.getElementById('state').value;
+
+        var address = street + ', ' + city + ', ' + state;
+        
+        // Make sure the street address and city user input isn't blank.
+        if (street == '' || city == '' || state == '') {
+          window.alert('You must enter a street, city and state location.');
         } else {
           // Geocode the address/area entered to get the center.  Then, center the map on it and zoom in.  
           geocoder.geocode(
@@ -511,7 +526,7 @@
     <script src="js/libs/jquery.min.js"></script>
     <script src="js/script.js"></script>
     <script src=
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&libraries=geometry&v=3&callback=initMap">
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&libraries=places,geometry&v=3&callback=initMap">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     

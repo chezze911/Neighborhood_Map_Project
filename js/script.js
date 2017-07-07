@@ -32,7 +32,7 @@ function loadData() {
 
     $.getJSON(weatherundergroundUrl, function(data) {  
       
-      $wuHeaderElem.text('The curent weather in ' + cityStr + ', ' + stateStr + ':');
+      $wuHeaderElem.text('The current weather in ' + cityStr + ', ' + stateStr + ':');
       info = data.current_observation;
       $wuElem.append('<li> Weather: ' + info.weather + '<br>' + info.icon_url + '</li>');
       $wuElem.append('<li> Temperature: ' + info.temp_f + '°F' + ' / ' + info.temp_c + '°C</li>');
