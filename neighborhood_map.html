@@ -43,6 +43,13 @@
         text-align: left;
         width: 340px;
       }
+      #pano {
+        width: 200px;
+        height: 200px;
+      }
+      .text {
+        font-size: 12px;
+      }
       .bgimg {
           position:fixed;
           top: 0;
@@ -178,71 +185,145 @@
 
       function initMap() {
         // Create a styles array to use with the map.
+        // source:  https://snazzymaps.com/style/70/unsaturated-browns
+        // creator: Simon Goellner
         var styles = [
-          {
-            featureType: 'water',
-            stylers: [
-              { color: '#19a0d8' }
-            ]
-          },{
-            featureType: 'administrative',
-            elementType: 'labels.text.stroke',
-            stylers: [
-              { color: '#ffffff' },
-              { weight: 6 }
-            ]
-          },{
-            featureType: 'administrative',
-            elementType: 'labels.text.fill',
-            stylers: [
-              { color: '#e85113' }
-            ]
-          },{
-            featureType: 'road.highway',
-            elementType: 'geometry.stroke',
-            stylers: [
-              { color: '#efe9e4' },
-              { lightness: -40 }
-            ]
-          },{
-            featureType: 'transit.station',
-            stylers: [
-              { weight: 9 },
-              { hue: '#e85113' }
-            ]
-          },{
-            featureType: 'road.highway',
-            elementType: 'labels.icon',
-            stylers: [
-              { visibility: 'off' }
-            ]
-          },{
-            featureType: 'water',
-            elementType: 'labels.text.stroke',
-            stylers: [
-              { lightness: 100 }
-            ]
-          },{
-            featureType: 'water',
-            elementType: 'labels.text.fill',
-            stylers: [
-              { lightness: -100 }
-            ]
-          },{
-            featureType: 'poi',
-            elementType: 'geometry',
-            stylers: [
-              { visibility: 'on' },
-              { color: '#f0e4d3' }
-            ]
-          },{
-            featureType: 'road.highway',
-            elementType: 'geometry.fill',
-            stylers: [
-              { color: '#efe9e4' },
-              { lightness: -25 }
-            ]
-          }
+            {
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "hue": "#ff4400"
+                    },
+                    {
+                        "saturation": -68
+                    },
+                    {
+                        "lightness": -4
+                    },
+                    {
+                        "gamma": 0.72
+                    }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels.icon"
+            },
+            {
+                "featureType": "landscape.man_made",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "hue": "#0077ff"
+                    },
+                    {
+                        "gamma": 3.1
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "stylers": [
+                    {
+                        "hue": "#00ccff"
+                    },
+                    {
+                        "gamma": 0.44
+                    },
+                    {
+                        "saturation": -33
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "stylers": [
+                    {
+                        "hue": "#44ff00"
+                    },
+                    {
+                        "saturation": -23
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "hue": "#007fff"
+                    },
+                    {
+                        "gamma": 0.77
+                    },
+                    {
+                        "saturation": 65
+                    },
+                    {
+                        "lightness": 99
+                    }
+                ]
+            },
+            {
+                "featureType": "water",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "gamma": 0.11
+                    },
+                    {
+                        "weight": 5.6
+                    },
+                    {
+                        "saturation": 99
+                    },
+                    {
+                        "hue": "#0091ff"
+                    },
+                    {
+                        "lightness": -86
+                    }
+                ]
+            },
+            {
+                "featureType": "transit.line",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "lightness": -48
+                    },
+                    {
+                        "hue": "#ff5e00"
+                    },
+                    {
+                        "gamma": 1.2
+                    },
+                    {
+                        "saturation": -23
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "saturation": -64
+                    },
+                    {
+                        "hue": "#ff9100"
+                    },
+                    {
+                        "lightness": 16
+                    },
+                    {
+                        "gamma": 0.47
+                    },
+                    {
+                        "weight": 2.7
+                    }
+                ]
+            }
         ];
 
         // Constructor creates a new map - only center and zoom are required.
@@ -313,13 +394,43 @@
       function populateInfoWindow(marker, infowindow) {
         // Check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
+          // Clear the infowindow content to give the streetview time to load.
+          infowindow.setContent('');
           infowindow.marker = marker;
-          infowindow.setContent('<div>' + marker.title + '</div>');
-          infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick', function() {
             infowindow.marker = null;
           });
+          var streetViewService = new google.maps.StreetViewService();
+          var radius = 50;
+          // In case the status is OK, which means the pano was found, compute the
+          // position of the streetview image, then calculate the heading, then get a
+          // panorama from that and set the options
+          function getStreetView(data, status) {
+            if (status == google.maps.StreetViewStatus.OK) {
+              var nearStreetViewLocation = data.location.latLng;
+              var heading = google.maps.geometry.spherical.computeHeading(
+                nearStreetViewLocation, marker.position);
+                infowindow.setContent('<div>' + marker.title + '</div><div id="pano"></div>');
+                var panoramaOptions = {
+                  position: nearStreetViewLocation,
+                  pov: {
+                    heading: heading,
+                    pitch: 30
+                  }
+                };
+              var panorama = new google.maps.StreetViewPanorama(
+                document.getElementById('pano'), panoramaOptions);
+            } else {
+              infowindow.setContent('<div>' + marker.title + '</div>' +
+                '<div>No Street View Found</div>');
+            }
+          }
+          // Use streetview service to get the closest streetview image within
+          // 50 meters of the markers position
+          streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+          // Open the infowindow on the correct marker.
+          infowindow.open(map, marker);
         }
       }
 
@@ -360,8 +471,8 @@
     </script>
     <script src="js/libs/jquery.min.js"></script>
     <script src="js/script.js"></script>
-    <script 
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&v=3&callback=initMap">
+    <script src=
+        "https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&libraries=geometry&v=3&callback=initMap">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     

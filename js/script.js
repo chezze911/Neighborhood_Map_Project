@@ -32,10 +32,10 @@ function loadData() {
 
     $.getJSON(weatherundergroundUrl, function(data) {  
       
-      $wuHeaderElem.text('The curent weather in ' + cityStr + ':');
-      var conditions = $wuElem;
+      $wuHeaderElem.text('The curent weather in ' + cityStr + ', ' + stateStr + ':');
       info = data.current_observation;
-      conditions.append('<li> Temperature: ' + info.temp_f + '°F' + ' / ' + info.temp_c + '°C</li>');
+      $wuElem.append('<li> Weather: ' + info.weather + '<br>' + info.icon_url + '</li>');
+      $wuElem.append('<li> Temperature: ' + info.temp_f + '°F' + ' / ' + info.temp_c + '°C</li>');
     }).error(function(e){
         $wuHeaderElem.text("Sorry, weather underground could not be loaded. Please try again.");
     });
