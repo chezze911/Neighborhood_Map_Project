@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <style>
       html,
       body {
@@ -26,6 +27,12 @@
       #show-listings {
         width: 48%;
       }
+      hr {
+        background: #D0D7D9;
+        height: 1px;
+        margin: 20px 0 20px 0;
+        border: none;
+      }
       #map {
         bottom:3px;
         height: 100%;
@@ -46,6 +53,9 @@
       #pano {
         width: 200px;
         height: 200px;
+      }
+      #places-search{
+        width: 84%;
       }
       .text {
         font-size: 12px;
@@ -86,10 +96,6 @@
         padding:10px;
         border-top: 1px solid #CCC;
       }
-      #street {
-        position: relative;
-        width: 70%;
-      }
       #zoom-to-area {
         width: 24%;
       }
@@ -109,10 +115,9 @@
           <form id="form-container" class="form-container">
             <label for="street">Street: </label><input type="text" id="street" placeholder="Enter desired address!"value="">
             <br>
-            <label for="city">City: </label><input type="text" id="city" placeholder ="Enter City" value="">
+            <label for="city">City: </label><input type="text" id="city" placeholder ="Mountain View" value="">
             <label for="state">State: </label>
             <select id="state" name="state" value="">
-              <option value ="">  </option>
               <option value="CA">CA</option>
               <option value="AL">AL</option>
               <option value="AK">AK</option>
@@ -177,6 +182,12 @@
             <h3 id="weather-underground-forecast" class="weather-list">Weather Underground will tell you here!</h3>
           </div>
           <hr>
+          <div>
+            <span class = "text">Search for nearby places</span>
+            <input id="places-search" type="text" placeholder="Ex: sushi in mountain view, ca">
+            <input id="go-places" type="button" value="Go">
+          </div>
+          <hr>
         </div>
       </div>
       <div class="wikipedia-container">
@@ -194,6 +205,9 @@
 
       // Create a new blank array for all the listing markers.
       var markers = [];
+
+      // Create placemarkers array to use in multiple functions to have control over the number of places that show.
+      var placeMarkers = [];
 
       function initMap() {
         // Create a styles array to use with the map.
@@ -349,9 +363,15 @@
         // this autocomplete is for use in the search within street entry box.
         var streetAutocomplete = new google.maps.places.Autocomplete(document.getElementById('street'));
         // This autocomplete is for use in the geocoder city entry box.
-        var zoomAutocomplete = new google.maps.places.Autocomplete(document.getElementById('city'));
+        var cityAutocomplete = new google.maps.places.Autocomplete(document.getElementById('city'));
         // Bias the boundaries within the map for the city entry box text.
-        zoomAutocomplete.bindTo('bounds', map);
+        cityAutocomplete.bindTo('bounds', map);
+
+        // Create a searchbox in order to execute a places search
+        var searchBox = new google.maps.places.SearchBox(document.getElementById('places-search'));
+        // Bias the searchbox to within the bounds of the map.
+        searchBox.setBounds(map.getBounds());
+
 
         // These are the real estate listings that will be shown to the user.
         // Normally we'd have these in a database instead.
@@ -404,12 +424,20 @@
         }
 
         document.getElementById('show-listings').addEventListener('click', showListings);
-        document.getElementById('hide-listings').addEventListener('click', hideListings);
-      }
-
-        document.getElementById('zoom-to-area').addEventListener('click', function() {
-          zoomToArea();
+        document.getElementById('hide-listings').addEventListener('click', function() {
+          hideMarkers(markers);
         });
+
+        document.getElementById('zoom-to-area').addEventListener('click', function() {zoomToArea();
+      });
+
+        // Listen for the event fired when the user selects a prediction from the picklist and retrieves more details for that place.
+        searchBox.addListener('places_changed', function() {
+          searchBoxPlaces(this);
+        });
+
+        // Listen for the event fired when the user selects a prediction and clicks "go" for more details for that place.
+        document.getElementById('go-places').addEventListener('click', textSearchPlaces);
       // This function takes the input value in the find nearby area text input
       // locates it, and then zooms into that area.  This is so that the user can show all listings, then decide to focus on one area of the map.  
       function zoomToArea() {
@@ -423,9 +451,9 @@
         var state = document.getElementById('state').value;
 
         var address = street + ', ' + city + ', ' + state;
-        
+
         // Make sure the street address and city user input isn't blank.
-        if (street == '' || city == '' || state == '') {
+        if (street == '' || city == '') {
           window.alert('You must enter a street, city and state location.');
         } else {
           // Geocode the address/area entered to get the center.  Then, center the map on it and zoom in.  
@@ -500,7 +528,7 @@
       }
 
       // This function will loop through the listings and hide them all.
-      function hideListings() {
+      function hideMarkers(markers) {
         for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(null);
         }
@@ -520,8 +548,68 @@
         return markerImage;
       }
 
+      // This function fires when the user selects a searchbox picklist item.
+      // It will do a nearby search using the selected query string or place.
+      function searchBoxPlaces(searchBox) {
+        hideMarkers(placeMarkers);
+        var places = searchBox.getPlaces();
+        // For each place, get the icon, name and location.
+        createMarkersForPlaces(places);
+        if (places.length == 0) {
+          window.alert('We did not find any places matching that search!');
+        }
+      }
 
+      // This function firest when the user select "go" on the places search.
+      // It will do a nearby search using the entered query string or place.
+      function textSearchPlaces() {
+        var bounds = map.getBounds();
+        hideMarkers(placeMarkers);
+        var placesService = new google.maps.places.PlacesService(map);
+        placesService.textSearch({
+          query: document.getElementById('places-search').value,
+          bounds: bounds
+        }, function(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            createMarkersForPlaces(results);
+          }
+        });
+      }
 
+      // This function creates markers for each place found in either places search.
+      function createMarkersForPlaces(places) {
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < places.length; i++) {
+          var place = places[i];
+          var icon = {
+            url: place.icon,
+            size: new google.maps.Size(35, 35),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(15, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+          // Create a marker for each place.
+          var marker = new google.maps.Marker({
+            map: map,
+            icon: icon,
+            title: place.name,
+            position: place.geometry.location,
+            id: place.id
+          });
+          // If a marker is clicked, do a place details search on it in the next function.
+          marker.addListener('click', function() {
+          getPlacesDetails(this, place);
+          });
+          placeMarkers.push(marker);
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        }
+        map.fitBounds(bounds);
+      }
     </script>
     <script src="js/libs/jquery.min.js"></script>
     <script src="js/script.js"></script>

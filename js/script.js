@@ -34,8 +34,9 @@ function loadData() {
       
       $wuHeaderElem.text('The current weather in ' + cityStr + ', ' + stateStr + ':');
       info = data.current_observation;
-      $wuElem.append('<li> Weather: ' + info.weather + '<br>' + info.icon_url + '</li>');
-      $wuElem.append('<li> Temperature: ' + info.temp_f + '°F' + ' / ' + info.temp_c + '°C</li>');
+
+      $wuElem.append('<ul>' + info.weather + '<br>' + ('<img src= " ' + info.icon_url + '" alt="weather Icon">') + '</ul>');
+      $wuElem.append('<ul>' + Math.round(info.temp_f) + '°F' + ' / ' + Math.round(info.temp_c) + '°C</ul>');
     }).error(function(e){
         $wuHeaderElem.text("Sorry, weather underground could not be loaded. Please try again.");
     });
