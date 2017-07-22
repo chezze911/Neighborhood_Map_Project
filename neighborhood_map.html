@@ -75,7 +75,7 @@
         margin-right: 10px;
         background-color: rgba(255,255,255,0.7);
       }
-      .nytimes-container {
+      .flickr-container {
         padding: 10px;
         margin-right:300px;
         background-color: rgba(255,255,255,0.7);
@@ -83,7 +83,7 @@
       .weather-underground-container {
         font-size: 12px;
       }
-      .article-list {
+      .images-list {
         margin: 0;
         padding: 0;
       }
@@ -102,12 +102,20 @@
       .article:first-child {
         border-top:none;
       }
+      #rudr_instafeed{
+        float:left;
+        width:200px;
+        height:200px;
+        margin:10px;
+        max-width:100%;
+        max-height:100%;
+      }
     </style>
   </head>
   <body>
     <div class="main-container">
       <div class="options-box">
-        <h1>Find Your New Mountain View, California Home</h1>
+        <h1>Find Your New San Jose, California Home</h1>
         <div>
           <input id="show-listings" type="button" value="Show Listings">
           <input id="hide-listings" type="button" value="Hide Listings">
@@ -115,7 +123,7 @@
           <form id="form-container" class="form-container">
             <label for="street">Street: </label><input type="text" id="street" placeholder="Enter desired address!"value="">
             <br>
-            <label for="city">City: </label><input type="text" id="city" placeholder ="Mountain View" value="">
+            <label for="city">City: </label><input type="text" id="city" placeholder ="San Jose" value="">
             <label for="state">State: </label>
             <select id="state" name="state" value="">
               <option value="CA">CA</option>
@@ -184,7 +192,7 @@
           <hr>
           <div>
             <span class = "text">Search for nearby places</span>
-            <input id="places-search" type="text" placeholder="Ex: sushi in mountain view, ca">
+            <input id="places-search" type="text" placeholder="Ex: sushi in san jose, ca">
             <input id="go-places" type="button" value="Go">
           </div>
           <hr>
@@ -194,9 +202,9 @@
         <h3 id="wikipedia-header">Relevant Wikipedia Links</h3>
         <ul id="wikipedia-links">find relevant Wikipedia articles here!</ul>
     </div>
-    <div class="nytimes-container">
-        <h3 id="nytimes-header">New York Times Articles</h3>
-        <ul id="nytimes-articles" class="article-list">What's going on in your new city? The NY Times will tell you here!</ul>
+    <div class="instagram-container">
+        <h3 id="instagram-header">Instagram Images</h3>
+        <ul id="rudr_instafeed" class="images-list">What's going on in San Jose? My Instagram will show you here!</ul>
     </div>
       <div id="map"></div>
     </div>
@@ -354,7 +362,7 @@
 
         // Constructor creates a new map - only center and zoom are required.
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 37.3999, lng: -122.108401},
+          center: {lat: 37.3394444, lng: -121.8938889},
           zoom: 13,
           styles: styles,
           mapTypeControl: false
@@ -376,12 +384,12 @@
         // These are the real estate listings that will be shown to the user.
         // Normally we'd have these in a database instead.
         var locations = [
-          {title: 'Verve', location: {lat: 37.395169, lng: -122.099622}},
-          {title: 'Avalon Towers on the Peninsula', location: {lat: 37.398703, lng: -122.107312}},
-          {title: 'Carmel The Village', location: {lat: 37.402617, lng: -122.111048}},
-          {title: 'Birch Creek', location: {lat: 37.397316, lng: -122.099517}},
-          {title: 'Domus on the Boulevard', location: {lat: 37.403, lng: -122.115511}},
-          {title: 'Fayette Arms Apartments', location: {lat: 37.405073, lng: -122.114428}}
+          {title: 'Misora', location: {lat: 37.319926, lng: -121.946511}},
+          {title: 'Park Kiely', location: {lat: 37.319817, lng: -121.976738}},
+          {title: '808 West Apartments', location: {lat: 37.317033, lng: -121.841314}},
+          {title: 'The Pierce', location: {lat: 37.327007, lng: -121.884473}},
+          {title: 'Fruitdale Station Apartments', location: {lat: 37.309412, lng: -121.918435}},
+          {title: 'Avalon at Cahill Park', location: {lat: 37.331571, lng: -121.905183}}
         ];
 
         var largeInfowindow = new google.maps.InfoWindow();
