@@ -435,7 +435,7 @@
         });
 
         document.getElementById('zoom-to-area').addEventListener('click', function() {zoomToArea();
-        });
+      });
 
         // Listen for the event fired when the user selects a prediction from the picklist and retrieves more details for that place.
         searchBox.addListener('places_changed', function() {
@@ -444,8 +444,6 @@
 
         // Listen for the event fired when the user selects a prediction and clicks "go" for more details for that place.
         document.getElementById('go-places').addEventListener('click', textSearchPlaces);
-      }
-
       // This function takes the input value in the find nearby area text input
       // locates it, and then zooms into that area.  This is so that the user can show all listings, then decide to focus on one area of the map.  
       function zoomToArea() {
@@ -624,7 +622,6 @@
     <script src=
         "https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&libraries=places,geometry&v=3&callback=initMap">
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     
 
   </body>
