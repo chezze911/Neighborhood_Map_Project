@@ -108,6 +108,16 @@
         height:300px;
         margin:10px;
       }
+      span.stars, span.stars span {
+          display: block;
+          background: url(stars.png) 0 -16px repeat-x;
+          width: 80px;
+          height: 16px;
+      }
+
+      span.stars span {
+          background-position: 0 0;
+      }
     </style>
   </head>
   <body>
@@ -660,10 +670,22 @@
                 {maxHeight: 100, maxWidth: 200}) + '">';
           }
           if (place.rating) {
-            innerHTML += '<br><strong> Rating: </strong>' + place.price_level;
+            innerHTML += '<br><strong> Rating: </strong>' + place.rating;
           }
           if (place.price_level) {
-            innerHTML += '<strong> Price Level: </strong>' + place.price_level;
+            if (place.price_level == 1) {
+            innerHTML += '<br><strong> Price Level: </strong>' + '$';
+            }
+            if (place.price_level == 2) {
+            innerHTML += '<br><strong> Price Level: </strong>' + '$$';
+            }
+            if (place.price_level == 3) {
+              innerHTML += '<br><strong> Price Level: </strong>' + '$$$';
+            }
+            if (place.price_level == 4) {
+              innerHTML += '<br><strong> Price Level: </strong>' + '$$$$';
+            }
+
           }
           innerHTML += '</div>';
           infowindow.setContent(innerHTML);

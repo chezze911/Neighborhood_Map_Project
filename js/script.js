@@ -3,20 +3,14 @@ function loadData() {
 
     var $body = $('body');
     var $wikiElem = $('#wikipedia-links');
-    // var $nytHeaderElem = $('#nytimes-header');
-    // var $nytElem = $('#nytimes-articles');
     var $instagramHeaderElem = $('#instagram-header');
     var $instagramElem = $('#rudr_instafeed');
-    // var $flickrHeaderElem = $('flickr-header');
-    // var $flickrElem = $('flickr-images');
     var $wuHeaderElem = $('#weather-underground-header');
     var $wuElem = $('#weather-underground-forecast');
 
     // clear out old data before new request
     $wikiElem.text("");
-    // $nytElem.text("");
     $instagramElem.text("");
-    // $flickrElem.text("");
     $wuElem.text("");
 
 
@@ -32,7 +26,7 @@ function loadData() {
 
 
     // weather underground AJAX request goes here
-    // append weather forecast for Mountain View, CA to wuElem, weather-underground-forecast
+    // append weather forecast for San Jose, CA to wuElem, weather-underground-forecast
     // display error messsage if we cannot get JSON
     var weatherundergroundUrl = "http://api.wunderground.com/api/65646c8c86b0eefe/conditions/q/" + stateStr  + "/" + cityStr + ".json";
 
@@ -49,24 +43,6 @@ function loadData() {
     });
 
 
-    // nytimes AJAX request
-
-    // var nytimesUrl = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + cityStr + '&sort=newest&api-key=3bfc87ca82bb435fa1dd7b941c229aa6";
-
-    // $.getJSON(nytimesUrl, function(data) {
-
-    //     $nytHeaderElem.text('New York Times Article About ' + cityStr);
-
-    //     articles = data.response.docs;
-
-    //     for (var i=0; i < articles.length; i++) {
-    //         var article = articles[i];
-    //         $nytElem.append('<li class="article">'+'<a href="'+article.web_url+'">'+article.headline.main+'</a>'+'<p>' + article.snippet + '</p>'+'</li>');
-    //     };
-
-    // }).error(function(e){
-    //     $nytHeaderElem.text('New York Times article could not be loaded');
-    // });
 
     // instagram images AJAX request
     // source:  https://rudrastyh.com/api/instagram-with-pure-javascript.html
@@ -84,19 +60,6 @@ function loadData() {
     scrElement.setAttribute( 'src', 'https://api.instagram.com/v1/users/self/media/recent?access_token=' + token + '&count=' + num_photos + '&callback=mishaProcessResult' );
     document.body.appendChild( scrElement );
 
-    //Flickr AJAX request
-
-    // var flickrUrl = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=9d25e28c8203f729d00a03bf45e803b0&tags=" + cityStr + stateStr + "&safe_search=1&per_page=20" + "&format=json&jsoncallback=?";
-    // var src;
-    // $.getJSON(flickrUrl, function(data){
-    //     $.each(data.photos.photo, function(i,item){
-    //         src = "http://farm"+ item.farm +".static.flickr.com/"+ item.server +"/"+ item.id +"_"+ item.secret +"_m.jpg";
-    //         $("<img/>").attr("src", src).appendTo('#flickr-images');
-    //         if ( i == 3 ) return false;
-    //     });
-    // }).error(function(e){
-    //     $flickrHeaderElem.text('flickr images could not be loaded');
-    //     });;
 
     
     // Wikipedia AJAX request
@@ -123,6 +86,24 @@ function loadData() {
         }
     });
     return false;
+
+    // jQuery for star rating in places-search
+    // source:  https://stackoverflow.com/questions/1987524/turn-a-number-into-star-rating-display-using-jquery-and-css
+    $.fn.stars = function() {
+        return $(this).each(function() {
+            // Get the value
+            val = Math.round(val * 4) / 4; /* To round to nearest quarter */
+            val = Math.round(val * 2) / 2; /* To round to nearest half */
+            var val = parseFloat($(this).html());
+            // Make sure that the value is in 0 - 5 range, multiply to get width
+            var size = Math.max(0, (Math.min(5, val))) * 16;
+            // Create stars holder
+            var $span = $('<span />').width(size);
+            // Replace the numerical value with stars
+            $(this).html($span);
+        });
+    }
+
 
 }
 
