@@ -16,8 +16,8 @@ How to run
 
 To run this application download all of the files and open the index.html file. For this application to run properly you must be connected to the internet.
 
-When you type in San Jose into the city search input area and hit enter, you will see I have integrated the wunderground weather API, Instagram API, and Wikipedia API to show you the current weather, San Jose pictures from my Instagram account and links to Wikipedia about San Jose, CA.
+Type in a street name and San Jose into the city search input area and hit enter.  An example address for you to enter is given below.  You will see I have integrated the weather underground API, the Instagram API, and the Wikipedia API to show you the current weather, San Jose pictures from my Instagram account and links to Wikipedia about San Jose, CA.
 
 Example Adress: Pho Papa (one of my favorite Pho restaurants in San Jose)
-                1611 E Capitol Expy,
-                San Jose
+                street:  1611 E Capitol Expy,
+                city:  San Jose
