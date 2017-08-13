@@ -52,10 +52,10 @@ function loadData() {
     scrElement = document.createElement( 'script' );
  
     window.mishaProcessResult = function( data ) {
-        for( x in data.data ){
+        for(var x in data.data ){
             container.innerHTML += '<li><img src="' + data.data[x].images.low_resolution.url + '"></li>';
         }
-    }
+    };
  
     scrElement.setAttribute( 'src', 'https://api.instagram.com/v1/users/self/media/recent?access_token=' + token + '&count=' + num_photos + '&callback=mishaProcessResult' );
     document.body.appendChild( scrElement );
@@ -80,7 +80,7 @@ function loadData() {
                 articleStr = articleList[i];
                 var url = 'http://en.wikipedia.org/wiki/' + articleStr;
                 $wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
-            };
+            }
 
             clearTimeout(wikiRequestTimeout);
         }
