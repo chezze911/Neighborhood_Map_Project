@@ -2,113 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <style>
-      html,
-      body {
-        font-family: Arial, sans-serif;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      .main-container {
-        height: 100%;
-        position: relative;
-      }
-      input {
-        font-size: 12px;
-      }
-      h1 {
-        color: #525454;
-        font-size: 22px;
-        margin: 0 0 10px 0;
-        text-align: center;
-      }
-      #hide-listings,
-      #show-listings {
-        width: 48%;
-      }
-      hr {
-        background: #D0D7D9;
-        height: 1px;
-        margin: 20px 0 20px 0;
-        border: none;
-      }
-      #map {
-        bottom:3px;
-        height: 100%;
-        left: 362px;
-        position: absolute;
-        right: 0px;
-      }
-      .options-box {
-        background: #fff;
-        border: 1px solid #999;
-        border-radius: 3px;
-        height: 94%;
-        line-height: 35px;
-        padding: 10px 10px 30px 10px;
-        text-align: left;
-        width: 340px;
-      }
-      #pano {
-        width: 200px;
-        height: 200px;
-      }
-      #places-search{
-        width: 84%;
-      }
-      .text {
-        font-size: 12px;
-      }
-      .bgimg {
-          position:fixed;
-          top: 0;
-          left: 0;
-          width:100%;
-          z-index:-1;
-          opacity:1;
-      }
-      .wikipedia-container {
-        float:right;
-        width:290px;
-        padding:10px;
-        margin-right: 10px;
-        background-color: rgba(255,255,255,0.7);
-      }
-      .flickr-container {
-        padding: 10px;
-        margin-right:300px;
-        background-color: rgba(255,255,255,0.7);
-      }
-      .weather-underground-container {
-        font-size: 12px;
-      }
-      .images-list {
-        margin: 0;
-        padding: 0;
-      }
-      .weather-list {
-        margin: 0;
-        padding: 0;
-      }
-      .article {
-        list-style-type: none;
-        padding:10px;
-        border-top: 1px solid #CCC;
-      }
-      #zoom-to-area {
-        width: 24%;
-      }
-      .article:first-child {
-        border-top:none;
-      }
-      #rudr_instafeed{
-        float:left;
-        width:300px;
-        height:300px;
-        margin:10px;
-      }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
     <div class="main-container">
@@ -360,7 +254,7 @@
 
         // Constructor creates a new map - only center and zoom are required.
         map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 37.3394444, lng: -121.8938889},
+          center: {lat: 37.3382, lng: -121.8863},
           zoom: 13,
           styles: styles,
           mapTypeControl: false
@@ -444,8 +338,8 @@
 
         // Listen for the event fired when the user selects a prediction and clicks "go" for more details for that place.
         document.getElementById('go-places').addEventListener('click', textSearchPlaces);
-      // This function takes the input value in the find nearby area text input
-      // locates it, and then zooms into that area.  This is so that the user can show all listings, then decide to focus on one area of the map.  
+      // This function takes the input value in the find street text input
+      // locates it, and then zooms into that area.  This is so that the user can show all listings, then decide to focus on one area of the map. 
       function zoomToArea() {
         // Initialize the geocoder.
         var geocoder = new google.maps.Geocoder();
@@ -462,10 +356,10 @@
         if (street == '' || city == '') {
           window.alert('You must enter a street, city and state location.');
         } else {
-          // Geocode the address/area entered to get the center.  Then, center the map on it and zoom in.  
+          // Geocode the address/area entered to get the center.  Then, center the map on it and zoom in.
           geocoder.geocode(
           {address: address,
-            componentRestrictions: {locality: 'Mountain View'}
+            componentRestrictions: {locality: 'San Jose'}
           }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               map.setCenter(results[0].geometry.location);
