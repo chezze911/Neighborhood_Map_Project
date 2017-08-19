@@ -1,6 +1,6 @@
 
 html,
-      body {
+      body, a, p {
         font-family: Arial, sans-serif;
         height: 100%;
         margin: 0;
@@ -12,12 +12,28 @@ html,
       }
       input {
         font-size: 12px;
+        width: 100px;
       }
       h1 {
         color: #525454;
-        font-size: 22px;
+        font-size: 18px;
         margin: 0 0 10px 0;
         text-align: center;
+      }
+      table { 
+        border: 1px solid black; 
+      }
+      h3, p, td, th { 
+        padding: 3px; 
+      }
+      h3 { f
+        font-weight: bold; 
+      }
+      .matched { 
+        background-color: yellow; 
+      }
+      .n { 
+        text-align: right; 
       }
       #hide-listings,
       #show-listings {
@@ -64,18 +80,13 @@ html,
           z-index:-1;
           opacity:1;
       }
-      .wikipedia-container {
+      /*.wikipedia-container {
         float:right;
         width:290px;
         padding:10px;
         margin-right: 10px;
         background-color: rgba(255,255,255,0.7);
-      }
-      .flickr-container {
-        padding: 10px;
-        margin-right:300px;
-        background-color: rgba(255,255,255,0.7);
-      }
+      }*/
       .weather-underground-container {
         font-size: 12px;
       }
@@ -98,9 +109,15 @@ html,
       .article:first-child {
         border-top:none;
       }
-      #rudr_instafeed{
+      /*#rudr_instafeed{
         float:left;
         width:300px;
         height:300px;
         margin:10px;
       }
+      .l*/iveExample { padding: 1em; background-color: #EEEEDD; border: 1px solid #CCC; max-width: 655px; }
+      .liveExample input { font-family: Arial; }
+      .liveExample b { font-weight: bold; }
+      .liveExample p { margin-top: 0.9em; margin-bottom: 0.9em; }
+      .liveExample select[multiple] { width: 50%; height: 8em; }
+      .liveExample h2 { margin-top: 0.4em; }
