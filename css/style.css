@@ -109,15 +109,3 @@ html,
       .article:first-child {
         border-top:none;
       }
-      /*#rudr_instafeed{
-        float:left;
-        width:300px;
-        height:300px;
-        margin:10px;
-      }
-      .l*/iveExample { padding: 1em; background-color: #EEEEDD; border: 1px solid #CCC; max-width: 655px; }
-      .liveExample input { font-family: Arial; }
-      .liveExample b { font-weight: bold; }
-      .liveExample p { margin-top: 0.9em; margin-bottom: 0.9em; }
-      .liveExample select[multiple] { width: 50%; height: 8em; }
-      .liveExample h2 { margin-top: 0.4em; }

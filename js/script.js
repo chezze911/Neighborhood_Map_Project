@@ -786,12 +786,12 @@ function loadData() {
 pin = [
     new Pin(map, "Misora", 37.319926, -121.946511, "test3"),
     new Pin(map, "Park Kiely", 37.319817, -121.976738, "test2"),
-    new Pin(map, "808 West Apartments", 37.317033, -121.841314, "test3")
+    new Pin(map, "808 West Apartments", 37.317033, -121.841314, "test1")
     ];
 
 // ["Misora", "Park Kiely", "808 West Apartments", "The Pierce", "Fruitdale Station Aaprtments", "Avalon at Cahill Park"]
 var Pin = function Pin(map, name, lat, lon, text) {
-    // this.itemToAdd = ko.observable("");
+
     var marker;
     this.name = ko.observable(name);
     this.lat = ko.observable(lat);
@@ -813,20 +813,6 @@ var Pin = function Pin(map, name, lat, lon, text) {
         }
     });
     this.isVisible(true);
-    // this.addItem = function () {
-    //     if ((this.itemToAdd() != "") && (this.allItems.indexOf(this.itemToAdd()) < 0)) // Prevent blanks and duplicates
-    //         this.allItems.push(this.itemToAdd());
-    //     this.itemToAdd(""); // Clear the text box
-    // };
- 
-    // self.removeSelected = function () {
-    //     this.allItems.removeAll(self.selectedItems());
-    //     this.selectedItems([]); // Clear selection
-    // };
- 
-    // self.sortItems = function() {
-    //     self.allItems.sort();
-    // };
 };
 
 // ko.utils.arrayFilter - filter the items using the filter text
