@@ -10,7 +10,7 @@
     ];
 
   var map;
-
+var largeInfowindow
   // Create a new blank array for all the listing markers.
   var markers = [];
 
@@ -212,14 +212,14 @@
 
     // These are the real estate listings that will be shown to the user.
     // Normally we'd have these in a database instead.
-    var locations = [
+  /*  var locations = [
       {title: 'Misora', location: {lat: 37.319926, lng: -121.946511}},
       {title: 'Park Kiely', location: {lat: 37.319817, lng: -121.976738}},
       {title: '808 West Apartments', location: {lat: 37.317033, lng: -121.841314}},
       {title: 'The Pierce', location: {lat: 37.327007, lng: -121.884473}},
       {title: 'Fruitdale Station Apartments', location: {lat: 37.309412, lng: -121.918435}},
       {title: 'Avalon at Cahill Park', location: {lat: 37.331571, lng: -121.905183}}
-    ];
+    ];*/
 
     var largeInfowindow = new google.maps.InfoWindow();
 
@@ -230,22 +230,25 @@
     // mouses over the marker.
     var highlightedIcon = makeMarkerIcon('FFFF24');
 
-    var largeInfowindow = new google.maps.InfoWindow();
+   largeInfowindow = new google.maps.InfoWindow();
     // The following group uses the location array to create an array of markers on initialize.
-    for (var i = 0; i < locations.length; i++) {
+    for (var i = 0; i < defaultLocations.length; i++) { console.log("here")
       // Get the position from the location array.
-      var position = locations[i].location;
-      var title = locations[i].title;
+      var position = defaultLocations[i].position;
+      console.log( defaultLocations[i])
+      var title = defaultLocations[i].title;
       // Create a marker per location, and put into markers array.
       var marker = new google.maps.Marker({
         position: position,
-        title: title,
+        title: name,
         animation: google.maps.Animation.DROP,
         icon: defaultIcon,
-        id: i
+        id: i,
+        map: map
       });
       // Push the marker to our array of markers.
       markers.push(marker);
+      defaultLocations[i].marker = marker;
       // Create an onclick event to open the large infowindow at each marker.
       marker.addListener('click', function() {
         populateInfoWindow(this, largeInfowindow);
@@ -259,6 +262,7 @@
         this.setIcon(defaultIcon);
       });
     }
+    ko.applyBindings(new NeighborhoodViewModel());
 
     document.getElementById('show-listings').addEventListener('click', showListings);
     document.getElementById('hide-listings').addEventListener('click', function() {
@@ -641,10 +645,16 @@ function getContent(location){
 function NeighborhoodViewModel() {
     var self = this;
     self.markers = [];
+    self.filter = ko.observable();
+    self.filterItems = ko.observableArray(defaultLocations);
+    console.log(self.filterItems())
+    self.bounce = function(location) {
+      console.log(location)
+      largeInfowindow.open(map, location.marker)
+    }
 
-    self.defaultLocations = ko.observableArray(defaultLocations);
-
-    self.defaultLocations().forEach(function(location) {
+  /*  
+  defaultLocations().forEach(function(location) {
         
         var default_marker = new google.maps.Marker({
             map: map,
@@ -654,17 +664,12 @@ function NeighborhoodViewModel() {
             icon: 'https://ss1.4sqi.net/img/pin-squircle-blue-bd58a9a123ca8fb3a84f4ee889b6b781.png',
             animation: google.maps.Animation.DROP
         });
-
         location.default_marker = default_marker;
-
         default_marker.setVisible(true);
-
         //adds default_marker into markers array
         self.markers.push(default_marker);
-
             var CLIENT_ID_Foursquare = '&client_id=VSGRHLGZSLZDC0H3KZVLZJCBZOQ4VBO5DZIEWEVKXGXMQ0SB';
             var CLIENT_SECRET_Foursquare = '&client_secret=LNCN2UO3VNFB0Y5C14CJTSELFPJ5QOLL3F41G1IWKAL2YI1U';
-
             // Foursquare API REQUEST
             $.ajax({
                 type: "GET",
@@ -676,21 +681,16 @@ function NeighborhoodViewModel() {
                     console.log(data.response);
                     console.log(data.venue.name);
                     console.log(data.response.venue.location.formattedAddress);
-
                 var infoWindow = new google.maps.InfoWindow({
                                 content: getContent({title: data.response.venue.name,
                                 formattedAddress: data.response.venue.location.formattedAddress
                                 })
-
                 });
                 }
-
             });
     });
-
 }
 // var Pin = function Pin(map, name, lat, lon, text) {
-
 //     var marker;
 //     this.name = ko.observable(name);
 //     this.lat = ko.observable(lat);
@@ -701,9 +701,7 @@ function NeighborhoodViewModel() {
 //         position: new google.maps.LatLng(lat, lon),
 //         animation: google.maps.Animation.DROP
 //     });
-
 //     this.isVisible = ko.observable(false);
-
 //     this.isVisible.subscribe(function(currentState){
 //         if(currentState) {
 //             marker.setMap(map);
@@ -713,7 +711,6 @@ function NeighborhoodViewModel() {
 //     });
 //     this.isVisible(true);
 // };
-
 // ko.utils.arrayFilter - filter the items using the filter text
 // self.filteredItems = ko.computed(function(){
 //     var search = self.query().toLowerCase();
@@ -722,12 +719,12 @@ function NeighborhoodViewModel() {
 //         var doesMatch = pin.name().toLowerCase().indexOf(search) >= 0;
         
 //         pin.isVisible(doesMatch);
-
 //         return doesMatch;
 //     });
 // });
-
+*/
+}
 
 $('#form-container').submit(loadData);
 
-ko.applyBindings(NeighborhoodViewModel());
+
