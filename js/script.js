@@ -1,183 +1,4 @@
 
-  // var listingLocation = function(title, lat, lng) {
-    
-  //   var styles = [
-  //       {
-  //           "elementType": "geometry",
-  //           "stylers": [
-  //               {
-  //                   "hue": "#ff4400"
-  //               },
-  //               {
-  //                   "saturation": -68
-  //               },
-  //               {
-  //                   "lightness": -4
-  //               },
-  //               {
-  //                   "gamma": 0.72
-  //               }
-  //           ]
-  //       },
-  //       {
-  //           "featureType": "road",
-  //           "elementType": "labels.icon"
-  //       },
-  //       {
-  //           "featureType": "landscape.man_made",
-  //           "elementType": "geometry",
-  //           "stylers": [
-  //               {
-  //                   "hue": "#0077ff"
-  //               },
-  //               {
-  //                   "gamma": 3.1
-  //               }
-  //           ]
-  //       },
-  //       {
-  //           "featureType": "water",
-  //           "stylers": [
-  //               {
-  //                   "hue": "#00ccff"
-  //               },
-  //               {
-  //                   "gamma": 0.44
-  //               },
-  //               {
-  //                   "saturation": -33
-  //               }
-  //           ]
-  //       },
-  //       {
-  //           "featureType": "poi.park",
-  //           "stylers": [
-  //               {
-  //                   "hue": "#44ff00"
-  //               },
-  //               {
-  //                   "saturation": -23
-  //               }
-  //           ]
-  //       },
-  //       {
-  //           "featureType": "water",
-  //           "elementType": "labels.text.fill",
-  //           "stylers": [
-  //               {
-  //                   "hue": "#007fff"
-  //               },
-  //               {
-  //                   "gamma": 0.77
-  //               },
-  //               {
-  //                   "saturation": 65
-  //               },
-  //               {
-  //                   "lightness": 99
-  //               }
-  //           ]
-  //       },
-  //       {
-  //           "featureType": "water",
-  //           "elementType": "labels.text.stroke",
-  //           "stylers": [
-  //               {
-  //                   "gamma": 0.11
-  //               },
-  //               {
-  //                   "weight": 5.6
-  //               },
-  //               {
-  //                   "saturation": 99
-  //               },
-  //               {
-  //                   "hue": "#0091ff"
-  //               },
-  //               {
-  //                   "lightness": -86
-  //               }
-  //           ]
-  //       },
-  //       {
-  //           "featureType": "transit.line",
-  //           "elementType": "geometry",
-  //           "stylers": [
-  //               {
-  //                   "lightness": -48
-  //               },
-  //               {
-  //                   "hue": "#ff5e00"
-  //               },
-  //               {
-  //                   "gamma": 1.2
-  //               },
-  //               {
-  //                   "saturation": -23
-  //               }
-  //           ]
-  //       },
-  //       {
-  //           "featureType": "transit",
-  //           "elementType": "labels.text.stroke",
-  //           "stylers": [
-  //               {
-  //                   "saturation": -64
-  //               },
-  //               {
-  //                   "hue": "#ff9100"
-  //               },
-  //               {
-  //                   "lightness": 16
-  //               },
-  //               {
-  //                   "gamma": 0.47
-  //               },
-  //               {
-  //                   "weight": 2.7
-  //               }
-  //           ]
-  //       },
-  //   ];
-
-  //   var self = this;
-  //   this.title = title;
-  //   this.lat = lat;
-  //   this.lng = lng;
-
-  //   this.getInfo = function() {
-  //       this.infowindow = new google.maps.InfoWindow();
-
-  //       this.marker = new google.maps.Marker({
-  //           position: new google.maps.LatLng(self.lng, self.lat),
-  //           map: map,
-  //           title: self.title,
-  //           styles: styles
-  //       });
-
-  //   this.openInfowindow = function() {
-  //       for(var i=0; i<viewListingsModel.ldefaultLocations.length; i++){
-  //           viewListingsModel.defaultLocations[i].infowindow.close();
-  //   }
-
-  //           self.infowindow.open(map, self.marker);
-  //   };
-
-  //   this.addListener = google.maps.event.addListener(self.marker, 'click', (this.openInfowindow));
-  //   };
-
-  //   var viewListingsModel = {
-  //       defaultLocations:  [
-  //           new Location(),
-  //           new Location(),
-  //           new Location(),
-  //           new Location(),
-  //           new Location()
-  //           ],
-  //           query: ko.observable(''),
-  //   };
-
-  //   ko.applyBindings(viewListingsModel);
 
   var defaultLocations = [
       {title: 'Misora', location: {lat: 37.319926, lng: -121.946511}},
@@ -359,6 +180,22 @@
       styles: styles,
       mapTypeControl: false
     });
+
+    var default_marker = new google.maps.Marker({
+            map: map,
+            position: location.position,
+            title: location.title,
+            URL: location.shortUrl,
+            icon: 'https://ss1.4sqi.net/img/pin-squircle-blue-bd58a9a123ca8fb3a84f4ee889b6b781.png',
+            animation: google.maps.Animation.DROP
+    });
+
+    location.default_marker = default_marker;
+
+    default_marker.setVisible(true);
+
+    //adds default_marker into markers array
+    self.markers.push(default_marker);
 
     // this autocomplete is for use in the search within street entry box.
     var streetAutocomplete = new google.maps.places.Autocomplete(document.getElementById('street'));
@@ -783,51 +620,114 @@ function loadData() {
 
 }
 
-pin = [
-    new Pin(map, "Misora", 37.319926, -121.946511, "test3"),
-    new Pin(map, "Park Kiely", 37.319817, -121.976738, "test2"),
-    new Pin(map, "808 West Apartments", 37.317033, -121.841314, "test1")
+
+var openInfoWindow;
+
+var defaultLocations = [
+      {name: 'Misora-Apartments', position: {lat: 37.319926, lng: -121.946511}, id: "5920f1031de7652db3e0ed2f"},
+      {name: 'Park Kiely Apartments', position: {lat: 37.319817, lng: -121.976738}, id: "4fbc0c03e4b0c3466b4f3e55"},
+      {name: 'West Park Apartments', position: {lat: 37.300655, lng: -121.953355}, id: "4fa88798e4b0f380f2aa2182"},
+      {name: 'The Pierce', position: {lat: 37.327007, lng: -121.884473},id: "58d1c4838ab03f3added7502"},
+      {name: 'Fruitdale Station Apartments', position: {lat: 37.309412, lng: -121.918435}, id: "4b292153f964a520589924e3"},
+      {name: 'Avalon at Cahill Park', position: {lat: 37.331571, lng: -121.905183}, id: "54063e27498ed430b363688e"}
     ];
 
-// ["Misora", "Park Kiely", "808 West Apartments", "The Pierce", "Fruitdale Station Aaprtments", "Avalon at Cahill Park"]
-var Pin = function Pin(map, name, lat, lon, text) {
 
-    var marker;
-    this.name = ko.observable(name);
-    this.lat = ko.observable(lat);
-    this.lon = ko.observable(lon); 
-    this.text = ko.observable(text);
+function getContent(location){
+    return ("successfully retrieved content!")
+}
+
+
+function NeighborhoodViewModel() {
+    var self = this;
+    self.markers = [];
+
+    self.defaultLocations = ko.observableArray(defaultLocations);
+
+    self.defaultLocations().forEach(function(location) {
+        
+        var default_marker = new google.maps.Marker({
+            map: map,
+            position: location.position,
+            title: location.title,
+            URL: location.shortUrl,
+            icon: 'https://ss1.4sqi.net/img/pin-squircle-blue-bd58a9a123ca8fb3a84f4ee889b6b781.png',
+            animation: google.maps.Animation.DROP
+        });
+
+        location.default_marker = default_marker;
+
+        default_marker.setVisible(true);
+
+        //adds default_marker into markers array
+        self.markers.push(default_marker);
+
+            var CLIENT_ID_Foursquare = '&client_id=VSGRHLGZSLZDC0H3KZVLZJCBZOQ4VBO5DZIEWEVKXGXMQ0SB';
+            var CLIENT_SECRET_Foursquare = '&client_secret=LNCN2UO3VNFB0Y5C14CJTSELFPJ5QOLL3F41G1IWKAL2YI1U';
+
+            // Foursquare API REQUEST
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                cache: false,
+                url: 'https://api.foursquare.com/v2/venues/' + location.id + CLIENT_ID_Foursquare + CLIENT_SECRET_Foursquare + '&v=20171115' + 'm=foursquare',
+                async: true,
+                success: function(data) {
+                    console.log(data.response);
+                    console.log(data.venue.name);
+                    console.log(data.response.venue.location.formattedAddress);
+
+                var infoWindow = new google.maps.InfoWindow({
+                                content: getContent({title: data.response.venue.name,
+                                formattedAddress: data.response.venue.location.formattedAddress
+                                })
+
+                });
+                }
+
+            });
+    });
+
+}
+// var Pin = function Pin(map, name, lat, lon, text) {
+
+//     var marker;
+//     this.name = ko.observable(name);
+//     this.lat = ko.observable(lat);
+//     this.lon = ko.observable(lon); 
+//     this.text = ko.observable(text);
     
-    marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lon),
-        animation: google.maps.Animation.DROP
-    });
+//     marker = new google.maps.Marker({
+//         position: new google.maps.LatLng(lat, lon),
+//         animation: google.maps.Animation.DROP
+//     });
 
-    this.isVisible = ko.observable(false);
+//     this.isVisible = ko.observable(false);
 
-    this.isVisible.subscribe(function(currentState){
-        if(currentState) {
-            marker.setMap(map);
-        } else {
-            marker.setMap(null);
-        }
-    });
-    this.isVisible(true);
-};
+//     this.isVisible.subscribe(function(currentState){
+//         if(currentState) {
+//             marker.setMap(map);
+//         } else {
+//             marker.setMap(null);
+//         }
+//     });
+//     this.isVisible(true);
+// };
 
 // ko.utils.arrayFilter - filter the items using the filter text
-self.filteredItems = ko.computed(function(){
-    var search = self.query().toLowerCase();
+// self.filteredItems = ko.computed(function(){
+//     var search = self.query().toLowerCase();
         
-    return ko.utils.arrayFilter(self.pins(), function (pin){
-        var doesMatch = pin.name().toLowerCase().indexOf(search) >= 0;
+//     return ko.utils.arrayFilter(self.pins(), function (pin){
+//         var doesMatch = pin.name().toLowerCase().indexOf(search) >= 0;
         
-        pin.isVisible(doesMatch);
+//         pin.isVisible(doesMatch);
 
-        return doesMatch;
-    });
-});
+//         return doesMatch;
+//     });
+// });
 
-ko.applyBindings(Pin());
 
 $('#form-container').submit(loadData);
+
+ko.applyBindings(NeighborhoodViewModel());
