@@ -262,7 +262,7 @@ var largeInfowindow
         this.setIcon(defaultIcon);
       });
     }
-    ko.applyBindings(new NeighborhoodViewModel());
+    ko.applyBindings(new NeighborhoodViewModel(), document.getElementById("filterItems"));
 
     document.getElementById('show-listings').addEventListener('click', showListings);
     document.getElementById('hide-listings').addEventListener('click', function() {

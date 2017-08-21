@@ -10,12 +10,13 @@
       
         <h1>Find Your New San Jose, CA Home</h1>
         <div>
-
+          <div class='liveExample'> 
+    
           <form>
               Filter: <input type="text" data-bind='value: filter, valueUpdate: "afterkeydown"' placeholder = "Filter Locations"/>
               <ul data-bind="foreach: filterItems">
                 <li>
-                    <a data-bind="text: name, click: bounce"></a>
+                    <a data-bind="text: name, click: $root.bounce"></a>
                 </li>
               </ul>
           </form>
