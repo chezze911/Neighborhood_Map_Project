@@ -10,21 +10,19 @@
       
         <h1>Find Your New San Jose, CA Home</h1>
         <div>
-          <div class='liveExample'> 
     
           <form>
-              Filter: <input type="text" data-bind='value: filter, valueUpdate: "afterkeydown"' placeholder = "Filter Locations"/>
+              Filter: <input class= 'filter' type="search" data-bind='textInput: userInput, event: {keyup: filterItems}' placeholder = "Filter Listings"/>
               <ul data-bind="foreach: filterItems">
                 <li>
                     <a data-bind="text: name, click: $root.bounce"></a>
                 </li>
               </ul>
           </form>
-          
+
         </div>
           <hr>
-          <form id="form-container" class="form-container">
-            <label for="street">Street: </label><input type="text" id="street" placeholder="Enter desired address!"value="">
+          <form id="form-container" class="form-container">Find the current weather here!
             <br>
             <label for="city">City: </label><input type="text" id="city" placeholder ="San Jose" value="">
             <label for="state">State: </label>
@@ -83,24 +81,24 @@
             </select>
             <br>
             <button id="submit-btn">Submit</button>
-            <input id="zoom-to-area" type="button" value="Zoom">
+            
           <hr>
           </form>
 
 
           <div class = "weather-underground-container">
-            <h3 id ="weather-underground-header"> Find the current weather here!
+            <!-- <h3 id ="weather-underground-header"> Find the current weather here! -->
             <h3 id="weather-underground-forecast" class="weather-list">Weather Underground will tell you here!</h3>
           </div>
           <hr>
-          <div>
+          <!-- <div>
             <span class = "text">Search for nearby places</span>
             <input id="places-search" type="text" placeholder="Ex: sushi in san jose, ca">
             <input id="go-places" type="button" value="Go">
-          </div>
-          <hr>
+          </div> -->
+          <!-- <hr>
           <input id="show-listings" type="button" value="Show Listings">
-          <input id="hide-listings" type="button" value="Hide Listings">
+          <input id="hide-listings" type="button" value="Hide Listings"> -->
 
         </div>
       </div>

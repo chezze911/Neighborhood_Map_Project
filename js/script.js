@@ -17,18 +17,6 @@ var largeInfowindow
   // Create placemarkers array to use in multiple functions to have control over the number of places that show.
   var placeMarkers = [];
 
-//   var SimpleListModel = function(items) {
-//     this.items = ko.observableArray(items);
-//     this.itemToAdd = ko.observable("");
-//     this.addItem = function() {
-//         if (this.itemToAdd() != "") {
-//             this.items.push(this.itemToAdd()); // Adds the item. Writing to the "items" observableArray causes any associated UI to update.
-//             this.itemToAdd(""); // Clears the text box, because it's bound to the "itemToAdd" observable
-//         }
-//     }.bind(this);  // Ensure that "this" is always this view model
-// };
- 
-// ko.applyBindings(new SimpleListModel(["Misora", "Park Kiely", "808 West Apartments", 'The Pierce', 'Fruitdale Station Apartments', 'Avalon at Cahill Park']));
 
   function initMap() {
     // Create a styles array to use with the map.
@@ -197,29 +185,18 @@ var largeInfowindow
     //adds default_marker into markers array
     self.markers.push(default_marker);
 
-    // this autocomplete is for use in the search within street entry box.
-    var streetAutocomplete = new google.maps.places.Autocomplete(document.getElementById('street'));
-    // This autocomplete is for use in the geocoder city entry box.
-    var cityAutocomplete = new google.maps.places.Autocomplete(document.getElementById('city'));
-    // Bias the boundaries within the map for the city entry box text.
-    cityAutocomplete.bindTo('bounds', map);
 
-    // Create a searchbox in order to execute a places search
-    var searchBox = new google.maps.places.SearchBox(document.getElementById('places-search'));
-    // Bias the searchbox to within the bounds of the map.
-    searchBox.setBounds(map.getBounds());
+    self.isVisible = ko.observable(false);
 
+    self.isVisible.subscribe(function(currentState) {
+        if(currentState) {
+            default_marker.setMap(map);
+        } else {
+            default_marker.setMap(null);
+        }
+    });
+    self.isVisible(true);
 
-    // These are the real estate listings that will be shown to the user.
-    // Normally we'd have these in a database instead.
-  /*  var locations = [
-      {title: 'Misora', location: {lat: 37.319926, lng: -121.946511}},
-      {title: 'Park Kiely', location: {lat: 37.319817, lng: -121.976738}},
-      {title: '808 West Apartments', location: {lat: 37.317033, lng: -121.841314}},
-      {title: 'The Pierce', location: {lat: 37.327007, lng: -121.884473}},
-      {title: 'Fruitdale Station Apartments', location: {lat: 37.309412, lng: -121.918435}},
-      {title: 'Avalon at Cahill Park', location: {lat: 37.331571, lng: -121.905183}}
-    ];*/
 
     var largeInfowindow = new google.maps.InfoWindow();
 
@@ -261,56 +238,12 @@ var largeInfowindow
       marker.addListener('mouseout', function() {
         this.setIcon(defaultIcon);
       });
+      
     }
-    ko.applyBindings(new NeighborhoodViewModel(), document.getElementById("filterItems"));
+    ko.applyBindings(new NeighborhoodViewModel());
 
-    document.getElementById('show-listings').addEventListener('click', showListings);
-    document.getElementById('hide-listings').addEventListener('click', function() {
-      hideMarkers(markers);
-    });
-
-    document.getElementById('zoom-to-area').addEventListener('click', function() {zoomToArea();
-  });
-
-    // Listen for the event fired when the user selects a prediction from the picklist and retrieves more details for that place.
-    searchBox.addListener('places_changed', function() {
-      searchBoxPlaces(this);
-    });
-
-    // Listen for the event fired when the user selects a prediction and clicks "go" for more details for that place.
-    document.getElementById('go-places').addEventListener('click', textSearchPlaces);
-  // This function takes the input value in the find street text input
-  // locates it, and then zooms into that area.  This is so that the user can show all listings, then decide to focus on one area of the map. 
-  function zoomToArea() {
-    // Initialize the geocoder.
-    var geocoder = new google.maps.Geocoder();
-    // Get the address or place that the user entered.
-    var street = document.getElementById('street').value;
-
-    var city = document.getElementById('city').value;
-
-    var state = document.getElementById('state').value;
-
-    var address = street + ', ' + city + ', ' + state;
-
-    // Make sure the street address and city user input isn't blank.
-    if (street == '' || city == '') {
-      window.alert('You must enter a street, city and state location.');
-    } else {
-      // Geocode the address/area entered to get the center.  Then, center the map on it and zoom in.
-      geocoder.geocode(
-      {address: address,
-        componentRestrictions: {locality: 'San Jose'}
-      }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          map.setCenter(results[0].geometry.location);
-          map.setZoom(15);
-        } else {
-          window.alert('We counld not find that location - try entering a more' + ' specific place.');
-        }
-      });
-    }
   }
+
   // This function populates the infowindow when the marker is clicked. We'll only allow
   // one infowindow which will open at the marker that is clicked, and populate based
   // on that markers position.
@@ -354,24 +287,10 @@ var largeInfowindow
       streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
       // Open the infowindow on the correct marker.
       infowindow.open(map, marker);
-    }
-  }
-
-  // This function will loop through the markers array and display them all.
-  function showListings() {
-    var bounds = new google.maps.LatLngBounds();
-    // Extend the boundaries of the map for each marker and display the marker
-    for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(map);
-      bounds.extend(markers[i].position);
-    }
-    map.fitBounds(bounds);
-  }
-
-  // This function will loop through the listings and hide them all.
-  function hideMarkers(markers) {
-    for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(null);
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(function(){
+        marker.setAnimation(null);
+      }, 800);
     }
   }
 
@@ -389,140 +308,7 @@ var largeInfowindow
     return markerImage;
   }
 
-  // This function fires when the user selects a searchbox picklist item.
-  // It will do a nearby search using the selected query string or place.
-  function searchBoxPlaces(searchBox) {
-    hideMarkers(placeMarkers);
-    var places = searchBox.getPlaces();
-    // For each place, get the icon, name and location.
-    createMarkersForPlaces(places);
-    if (places.length == 0) {
-      window.alert('We did not find any places matching that search!');
-    }
-  }
 
-  // This function firest when the user select "go" on the places search.
-  // It will do a nearby search using the entered query string or place.
-  function textSearchPlaces() {
-    var bounds = map.getBounds();
-    hideMarkers(placeMarkers);
-    var placesService = new google.maps.places.PlacesService(map);
-    placesService.textSearch({
-      query: document.getElementById('places-search').value,
-      bounds: bounds
-    }, function(results, status) {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        createMarkersForPlaces(results);
-      }
-    });
-  }
-
-  // This function creates markers for each place found in either places search.
-  function createMarkersForPlaces(places) {
-    var bounds = new google.maps.LatLngBounds();
-    for (var i = 0; i < places.length; i++) {
-      var place = places[i];
-      var icon = {
-        url: place.icon,
-        size: new google.maps.Size(35, 35),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(15, 34),
-        scaledSize: new google.maps.Size(25, 25)
-      };
-      // Create a marker for each place.
-      var marker = new google.maps.Marker({
-        map: map,
-        icon: icon,
-        title: place.name,
-        position: place.geometry.location,
-        id: place.place_id
-      });
-      // Create a single infowindow to be used with the place details information
-      // so that only one is open at once.
-      var placeInfoWindow = new google.maps.InfoWindow();
-      // If a marker is clicked, do a place details search on it in the next function.
-      marker.addListener('click', function() {
-        if (placeInfoWindow.marker == this) {
-          console.log("This infowindow already is on this marker!");
-        } else {
-          getPlacesDetails(this, placeInfoWindow);
-        }
-      });
-      placeMarkers.push(marker);
-      if (place.geometry.viewport) {
-        // Only geocodes have viewport.
-        bounds.union(place.geometry.viewport);
-      } else {
-        bounds.extend(place.geometry.location);
-      }
-    }
-    map.fitBounds(bounds);
-  }
-
-// This is the PLACE DETAILS search - it's the most detailed so it's only
-// executed when a marker is selected, indicating the user wants more
-// details about that place.
-function getPlacesDetails(marker, infowindow) {
-  var service = new google.maps.places.PlacesService(map);
-  service.getDetails({
-    placeId: marker.id
-  }, function(place, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      // Set the marker property on this infowindow so it isn't created again.
-      infowindow.marker = marker;
-      var innerHTML = '<div>';
-      if (place.name) {
-        innerHTML += '<strong>' + place.name + '</strong>';
-      }
-      if (place.formatted_address) {
-        innerHTML += '<br>' + place.formatted_address;
-      }
-      if (place.formatted_phone_number) {
-        innerHTML += '<br>' + place.formatted_phone_number;
-      }
-      if (place.opening_hours) {
-        innerHTML += '<br><br><strong>Hours:</strong><br>' +
-            place.opening_hours.weekday_text[0] + '<br>' +
-            place.opening_hours.weekday_text[1] + '<br>' +
-            place.opening_hours.weekday_text[2] + '<br>' +
-            place.opening_hours.weekday_text[3] + '<br>' +
-            place.opening_hours.weekday_text[4] + '<br>' +
-            place.opening_hours.weekday_text[5] + '<br>' +
-            place.opening_hours.weekday_text[6];
-      }
-      if (place.photos) {
-        innerHTML += '<br><br><img src="' + place.photos[0].getUrl(
-            {maxHeight: 100, maxWidth: 200}) + '">';
-      }
-      if (place.rating) {
-        innerHTML += '<br><strong> Rating: </strong>' + place.rating;
-      }
-      if (place.price_level) {
-        if (place.price_level == 1) {
-        innerHTML += '<br><strong> Price Level: </strong>' + '$';
-        }
-        if (place.price_level == 2) {
-        innerHTML += '<br><strong> Price Level: </strong>' + '$$';
-        }
-        if (place.price_level == 3) {
-          innerHTML += '<br><strong> Price Level: </strong>' + '$$$';
-        }
-        if (place.price_level == 4) {
-          innerHTML += '<br><strong> Price Level: </strong>' + '$$$$';
-        }
-
-      }
-      innerHTML += '</div>';
-      infowindow.setContent(innerHTML);
-      infowindow.open(map, marker);
-      // Make sure the marker property is cleared if the infowindow is closed.
-      infowindow.addListener('closeclick', function() {
-        infowindow.marker = null;
-      });
-    }
-  });
- }
-}
 
 
 function loadData() {
@@ -541,14 +327,16 @@ function loadData() {
 
 
     // load streetview
-    var streetStr = $('#street').val();
+    // var streetStr = $('#street').val();
     var cityStr = $('#city').val();
     var stateStr = $('#state').val();
-    var address = streetStr + ', ' + cityStr + ', ' + stateStr;
+    // var cityStr = 'San Jose';
+    // var stateStr = 'CA';
+    // var address = streetStr + ', ' + cityStr + ', ' + stateStr;
 
 
-    var streetviewUrl = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
-    $body.append('<img class="bgimg" src = " ' + streetviewUrl + '">');
+    // var streetviewUrl = 'http://maps.googleapis.com/maps/api/streetview?size=600x400&location=' + address + '';
+    // $body.append('<img class="bgimg" src = " ' + streetviewUrl + '">');
 
 
     // weather underground AJAX request goes here
@@ -568,67 +356,13 @@ function loadData() {
         $wuHeaderElem.text("Sorry, weather underground could not be loaded. Please try again.");
     });
 
-
-
-    // // instagram images AJAX request
-    // // source:  https://rudrastyh.com/api/instagram-with-pure-javascript.html
-    // var token = '179587194.551f369.ce100fd77ea748c19d88f1c55fdecb64',
-    // num_photos = 10, // maximum 20
-    // container = document.getElementById( 'rudr_instafeed' ), // it is our <ul id="rudr_instafeed">
-    // scrElement = document.createElement( 'script' );
- 
-    // window.mishaProcessResult = function( data ) {
-    //     for(var x in data.data ){
-    //         container.innerHTML += '<li><img src="' + data.data[x].images.low_resolution.url + '"></li>';
-    //     }
-    // };
- 
-    // scrElement.setAttribute( 'src', 'https://api.instagram.com/v1/users/self/media/recent?access_token=' + token + '&count=' + num_photos + '&callback=mishaProcessResult' );
-    // document.body.appendChild( scrElement );
-
-
-    
-    // // Wikipedia AJAX request
-    // var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + cityStr + '&format=json&callback=wikiCallback';
-
-    // var wikiRequestTimeout = setTimeout(function(){
-    //     $wikiElem.text("failed to get wikipedia resources");
-    // }, 8000);
-
-    // $.ajax({
-    //     url: wikiUrl,
-    //     dataType: "jsonp",
-    //     // jsonp: "callback",
-    //     success: function(response) {
-    //         var articleList = response[1];
-
-    //         for (var i = 0; i < articleList.length; i++) {
-    //             articleStr = articleList[i];
-    //             var url = 'http://en.wikipedia.org/wiki/' + articleStr;
-    //             $wikiElem.append('<li><a href="' + url + '">' + articleStr + '</a></li>');
-    //         }
-
-    //         clearTimeout(wikiRequestTimeout);
-    //     }
-    // });
-    // return false;
-
-    // var defaultLocations = [
-    //   {title: 'Misora', location: {lat: 37.319926, lng: -121.946511}},
-    //   {title: 'Park Kiely', location: {lat: 37.319817, lng: -121.976738}},
-    //   {title: '808 West Apartments', location: {lat: 37.317033, lng: -121.841314}},
-    //   {title: 'The Pierce', location: {lat: 37.327007, lng: -121.884473}},
-    //   {title: 'Fruitdale Station Apartments', location: {lat: 37.309412, lng: -121.918435}},
-    //   {title: 'Avalon at Cahill Park', location: {lat: 37.331571, lng: -121.905183}}
-    // ];
-
 }
 
 
 var openInfoWindow;
 
 var defaultLocations = [
-      {name: 'Misora-Apartments', position: {lat: 37.319926, lng: -121.946511}, id: "5920f1031de7652db3e0ed2f"},
+      {name: 'Misora Apartments', position: {lat: 37.319926, lng: -121.946511}, id: "5920f1031de7652db3e0ed2f"},
       {name: 'Park Kiely Apartments', position: {lat: 37.319817, lng: -121.976738}, id: "4fbc0c03e4b0c3466b4f3e55"},
       {name: 'West Park Apartments', position: {lat: 37.300655, lng: -121.953355}, id: "4fa88798e4b0f380f2aa2182"},
       {name: 'The Pierce', position: {lat: 37.327007, lng: -121.884473},id: "58d1c4838ab03f3added7502"},
@@ -637,21 +371,70 @@ var defaultLocations = [
     ];
 
 
-function getContent(location){
-    return ("successfully retrieved content!")
-}
-
-
 function NeighborhoodViewModel() {
     var self = this;
     self.markers = [];
-    self.filter = ko.observable();
+    self.filter = ko.observable("");
+    // trach user input
+    self.userInput = ko.observable("");
+    self.search = ko.observable("");
+    // markers array based on search
+    self.visible = ko.observable("");
     self.filterItems = ko.observableArray(defaultLocations);
     console.log(self.filterItems())
     self.bounce = function(location) {
       console.log(location)
       largeInfowindow.open(map, location.marker)
     }
+    // Foursquare App Info
+    var CLIENT_ID = 'VSGRHLGZSLZDC0H3KZVLZJCBZOQ4VBO5DZIEWEVKXGXMQ0SB',
+        CLIENT_SECRET = 'LNCN2UO3VNFB0Y5C14CJTSELFPJ5QOLL3F41G1IWKAL2YI1U'
+
+    }
+    
+    self.filterPins = function () {
+        //Set all markers and places to not be visible
+        var searchInput = self.userInput().toLowerCase();
+        // close current infowindows when search term entered
+        infowindow.close();
+        self.visible.removeAll();
+
+        self.filterItems().forEach(function (location) {
+            self.visible.push(location)
+
+            location.setVisible(false);
+                // If user input is included in the name, set marker to visible
+                if(location.name().toLowerCase().indexOf(searchInput) !== -1) {
+                    self.visible.push(location);
+                }
+        });
+
+        self.visible().forEach(function (location) {
+            location.setVisible(true);
+        });
+    };
+
+
+// //filter the items using the filter text
+// self.filteredItems = ko.computed(function() {
+//     var filter = self.filter().toLowerCase();
+
+//     var stringStartsWith = function (string, startsWith) {          
+//         string = string || "";
+//         if (startsWith.length > string.length)
+//             return false;
+//         return string.substring(0, startsWith.length) === startsWith;
+//     };
+
+//     if (!filter) {
+//         return self.filterItems();
+//     } else {
+//         return ko.utils.arrayFilter(self.filterItems(), function(item) {
+//             return ko.utils.stringStartsWith(item.name().toLowerCase(), filter);
+//         });
+//     }
+// }, NeighborHoodViewModel);
+
 
   /*  
   defaultLocations().forEach(function(location) {
@@ -723,8 +506,88 @@ function NeighborhoodViewModel() {
 //     });
 // });
 */
-}
+// }
+// // ko.utils.arrayFilter - filter the items using the filter text
+//     NeighborhoodViewModel.filteredItems = ko.dependentObservable(function(){
+//         var self = this;
+//         var filter = self.filteredItems.toLowerCase();
+//         if(!filter) {
+//             return self.filteredItems();
+//         } else {
+//             return ko.utils.arrayFilter(self.filteredItems(), function(filter) {
+//                 return ko.utils.stringStartsWith(filter.name().toLowerCase(), filter);
+//             });
+//         }
+//     }, NeighborhoodViewModel);
 
-$('#form-container').submit(loadData);
+// var defaultLocations = [
+//       {name: 'Misora Apartments', position: {lat: 37.319926, lng: -121.946511}, id: "5920f1031de7652db3e0ed2f"},
+//       {name: 'Park Kiely Apartments', position: {lat: 37.319817, lng: -121.976738}, id: "4fbc0c03e4b0c3466b4f3e55"},
+//       {name: 'West Park Apartments', position: {lat: 37.300655, lng: -121.953355}, id: "4fa88798e4b0f380f2aa2182"},
+//       {name: 'The Pierce', position: {lat: 37.327007, lng: -121.884473},id: "58d1c4838ab03f3added7502"},
+//       {name: 'Fruitdale Station Apartments', position: {lat: 37.309412, lng: -121.918435}, id: "4b292153f964a520589924e3"},
+//       {name: 'Avalon at Cahill Park', position: {lat: 37.331571, lng: -121.905183}, id: "54063e27498ed430b363688e"}
+//     ];
+
+
+// pin = ko.observableArray([
+//               new Pin(map, name: "Misora Apartments", position: {lat: 37.319926, lng: -121.946511}),
+//               new Pin(map, name: 'Park Kiely Apartments', position: {lat: 37.319817, lng: -121.976738}),
+//               new Pin(map, name: 'West Park Apartments', position: {lat: 37.300655, lng: -121.953355}),
+//               new Pin(map, name: 'The Pierce', position: {lat: 37.327007, lng: -121.884473}),
+//               new Pin(map, name: 'Fruitdale Station Apartments', position: {lat: 37.309412, lng: -121.918435}),
+//               new Pin(map, name: 'Avalon at Cahill Park', position: {lat: 37.331571, lng: -121.905183})
+//         ]);
+
+// self.filter = ko.observable("");
+
+// give access to map object, so that it can register and de-register itself
+// var Pin = function Pin(map, name, position) {
+    
+//     var self = this;
+//     var marker;
+
+//     // self.pins = ko.observableArray([
+//     //           {new Pin(map, name: "Misora Apartments", position: {lat: 37.319926, lng: -121.946511})},
+//     //           {new Pin(map, name: 'Park Kiely Apartments', position: {lat: 37.319817, lng: -121.976738})},
+//     //           {new Pin(map, name: 'West Park Apartments', position: {lat: 37.300655, lng: -121.953355})},
+//     //           {new Pin(map, name: 'The Pierce', position: {lat: 37.327007, lng: -121.884473})},
+//     //           {new Pin(map, name: 'Fruitdale Station Apartments', position: {lat: 37.309412, lng: -121.918435})},
+//     //           {new Pin(map, name: 'Avalon at Cahill Park', position: {lat: 37.331571, lng: -121.905183})}
+//     //     ]);
+
+//     self.name = ko.observable(name);
+//     self.position = ko.observable(position);
+
+//     marker = new google.maps.Marker({
+//         position: position,
+//         animation: google.maps.Animation.DROP
+//     });
+
+//     self.isVisible = ko.observable(false);
+
+//     self.isVisible.subscribe(function(currentState) {
+//         if(currentState) {
+//             marker.setMap(map);
+//         } else {
+//             marker.setMap(null);
+//         }
+//     });
+//     self.isVisible(true);
+// }
+
+// self.filterItems = ko.computed(function () {
+//     var search = self.filter().toLowerCase();
+
+//     return ko.utils.arrayFilter(self.filterItems, function(defaultLocations) {
+//         var doesMatch = defaultLocations.name().toLowerCase().indexOf(search) >= 0;
+
+//         defaultLocations.isVisible(doesMatch);
+
+//         return doesMatch;
+//     });
+// });
+
+$("form-container").submit(loadData);
 
 
