@@ -12,7 +12,7 @@
         <div>
     
           <form>
-              Filter: <input class= 'filter' type="search" data-bind='textInput: userInput, event: {keyup: filterItems}' placeholder = "Filter Listings"/>
+              Filter: <input class= 'filter' type="search" data-bind='textInput: search, event: {keyup: filterSearchItems}' placeholder = "Filter Listings"/>
               <ul data-bind="foreach: filterItems">
                 <li>
                     <a data-bind="text: name, click: $root.bounce"></a>
@@ -111,8 +111,6 @@
     <script src=
         "https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&libraries=places,geometry&v=3&callback=initMap">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-debug.js"></script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout.mapping/2.4.1/knockout.mapping.js"></script>
     
 
   </body>
