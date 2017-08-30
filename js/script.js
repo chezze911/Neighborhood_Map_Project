@@ -260,16 +260,8 @@
 
           type: "GET",
           dataType: 'json',
-          url: 'https://api.foursquare.com/v2/venues/explore',
+          url: 'https://api.foursquare.com/v2/venues/' + location.id + CLIENT_ID_FOURSQUARE + CLIENT_SECRET_FOURSQUARE + '&v=20130815',
           async: true,
-          lat: defaultLocations[i].position.lat,
-          lng: defaultLocations[i].position.lng,
-          data: 'limit=1' + 
-                '&ll=' + lat + ',' + lng + 
-                CLIENT_ID_FOURSQUARE +
-                CLIENT_SECRET_FOURSQUARE +
-                '&v=20130815' +
-                '&m=foursquare',
 
           success: function(data) {
 
