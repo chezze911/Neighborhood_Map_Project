@@ -12,7 +12,7 @@
         <div>
     
           <form>
-              Filter: <input class= 'filter' type="search" data-bind='textInput: search, event: {keyup: filterSearchItems}' placeholder = "Filter Listings"/>
+              Filter: <input class= 'filter' type="search" data-bind='textInput: search, event: {keyup: filterItems}' placeholder = "Filter Listings"/>
               <ul data-bind="foreach: filterItems">
                 <li>
                     <a data-bind="text: name, click: $root.bounce"></a>

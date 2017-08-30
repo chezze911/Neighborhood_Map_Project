@@ -260,40 +260,43 @@
 
           type: "GET",
           dataType: 'json',
-          url: 'https://api.foursquare.com/v2/venues/search',
+          url: 'https://api.foursquare.com/v2/venues/explore',
           async: true,
+          lat: defaultLocations[i].position.lat,
+          lng: defaultLocations[i].position.lng,
           data: 'limit=1' + 
-                '&ll=' + marker.position + 
+                '&ll=' + lat + ',' + lng + 
                 CLIENT_ID_FOURSQUARE +
                 CLIENT_SECRET_FOURSQUARE +
-                '&v=20171111' +
+                '&v=20130815' +
                 '&m=foursquare',
 
-          success: function (data) {
+          success: function(data) {
 
-              console.log(data.response.venue.name);
-              console.log(data.response.venue.marker.formattedAddress);
+              console.log(data.response);
+              console.log("name: ", data.response.venue.name); // logs venue's name to the console
 
-              var myFourSquareData = new google.maps.InfoWindow({
-                              content: getContent({title: data.response.venue.name,
-                              formattedAddress: data.response.venue.marker.formattedAddress
-                              })
-  
+              // var myFourSquareData = new google.maps.InfoWindow({
+              //                 content: getContent({title: data.response.venue.name,
+              //                 formattedAddress: data.response.venue.marker.formattedAddress
+              //                 })
+
+              
+
               // Open the infowindow on the correct marker.
               infowindow.open(map, marker);
               marker.setAnimation(google.maps.Animation.BOUNCE);
               setTimeout(function(){
                 marker.setAnimation(null);
               }, 800);
-              infowindow.setContent(myFourSquareData);
-              });
-              },
-              else {
+              // infowindow.setContent(myFourSquareData);
+              }
+            }) 
+            error: {
                   infowindow.setContent('<div>' + marker.title + '</div>' + '<div>No Foursquare Data Returned</div>');
-                  document.getElementById("error").innerHTML = "<h1> Foursquare data retrieval error.  Please try again.</h1>";
                   }
               }
-      });
+      };
 
   // This function takes in a COLOR, and then creates a new marker
   // icon of that color. The icon will be 21 px wide by 34 high, have an origin
@@ -363,16 +366,16 @@ function viewModel() {
     }
 
     //ko.utils.arrayFilter - filter the items using the filter text
-    self.filterSearchItems = ko.computed(function(){
-        var search = self.filter().toLowerCase();
+    // self.filterSearchItems = ko.computed(function(){
+    //     var search = self.filter().toLowerCase();
 
-        return ko.utils.arrayFilter(self.filterItems, function (location){
-            var doesMatch = location.name().toLowerCase().indexOf(search) >= 0;
+    //     return ko.utils.arrayFilter(self.filterItems, function (location){
+    //         var doesMatch = location.name().toLowerCase().indexOf(search) >= 0;
 
-            location.isVisible(doesMatch);
-            return doesMatch;
-        });
-    });
+    //         location.isVisible(doesMatch);
+    //         return doesMatch;
+    //     });
+    // });
 }
 
 
