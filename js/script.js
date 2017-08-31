@@ -16,8 +16,7 @@
     ];
 
   function getContent(data) {
-    var fsUrl = data.url;
-    var contentString = "data retrieved from foursquare API";
+    var contentString = ('<div>' + marker.title + '</div>');
     // build the content string
     return contentString;
 }
@@ -215,6 +214,7 @@
         animation: google.maps.Animation.DROP,
         icon: defaultIcon,
         id: i,
+        foursquareID: defaultLocations[i].id,
         map: map
       });
       // Push the marker to our array of markers.
@@ -252,15 +252,25 @@
         infowindow.marker = null;
       });
 
-      var CLIENT_ID_FOURSQUARE = '&client_id=VSGRHLGZSLZDC0H3KZVLZJCBZOQ4VBO5DZIEWEVKXGXMQ0SB';
-      var CLIENT_SECRET_FOURSQUARE = '&client_secret=LNCN2UO3VNFB0Y5C14CJTSELFPJ5QOLL3F41G1IWKAL2YI1U';
+      var CLIENT_ID = 'VSGRHLGZSLZDC0H3KZVLZJCBZOQ4VBO5DZIEWEVKXGXMQ0SB';
+      var CLIENT_SECRET = 'LNCN2UO3VNFB0Y5C14CJTSELFPJ5QOLL3F41G1IWKAL2YI1U';
+      var url = 'https://api.foursquare.com/v2/venues/'
+      var version = '20130815';
+
+      var foursquareID = defaultLocations[marker.id].id;
       
       // Foursquare API REQUEST
       $.ajax({
-
+          url: url + foursquareID,
           type: "GET",
           dataType: 'json',
-          url: 'https://api.foursquare.com/v2/venues/' + location.id + CLIENT_ID_FOURSQUARE + CLIENT_SECRET_FOURSQUARE + '&v=20130815',
+          data: {
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            // near: "San Jose",
+            v: version,
+            //query: "donuts",
+          },
           async: true,
 
           success: function(data) {
@@ -268,12 +278,11 @@
               console.log(data.response);
               console.log("name: ", data.response.venue.name); // logs venue's name to the console
 
-              // var myFourSquareData = new google.maps.InfoWindow({
-              //                 content: getContent({title: data.response.venue.name,
-              //                 formattedAddress: data.response.venue.marker.formattedAddress
-              //                 })
-
-              
+              var myFoursquareData = ('<div>' + data.response.venue.name + 
+                '</div>' + '<div> Successfully retrieved Foursquare Data</div>' + 
+                '<div>' + 'contact: ' + data.response.venue.contact.formattedPhone + '</div>' +
+                '<div>' + 'location: ' + data.response.venue.location.address + '</div>' +
+                '<div>' + 'url: ' + '<a href =' + data.response.venue.url + '></a>' + '</div>');
 
               // Open the infowindow on the correct marker.
               infowindow.open(map, marker);
@@ -281,7 +290,7 @@
               setTimeout(function(){
                 marker.setAnimation(null);
               }, 800);
-              // infowindow.setContent(myFourSquareData);
+              infowindow.setContent(myFoursquareData);
               }
             }) 
             error: {
@@ -346,28 +355,34 @@ function viewModel() {
 
   var self = this;
     self.markers = [];
-    self.filter = ko.observable();
+    self.filter = ko.observable("");
     // track user input
     self.search = ko.observable();
     self.filterItems = ko.observableArray(defaultLocations);
     
-    console.log(self.filterItems())
+    //console.log(self.filterItems())
     self.bounce = function(location) {
-      console.log(location)
+      // console.log(location)
       largeInfowindow.open(map, location.marker)
     }
 
     //ko.utils.arrayFilter - filter the items using the filter text
-    // self.filterSearchItems = ko.computed(function(){
-    //     var search = self.filter().toLowerCase();
+    self.filterSearchItems = ko.computed(function(){
+        var search = self.filter().toLowerCase();
+        console.log("filterSearchItems");
 
-    //     return ko.utils.arrayFilter(self.filterItems, function (location){
-    //         var doesMatch = location.name().toLowerCase().indexOf(search) >= 0;
 
-    //         location.isVisible(doesMatch);
-    //         return doesMatch;
-    //     });
-    // });
+
+
+        // return ko.utils.arrayFilter(self.filterItems(), function (location){
+        //     var name = location.name.toLowerCase();
+        //     var doesMatch = location.name().toLowerCase().indexOf(search) >= 0;
+
+        //     console.log(name, search, doesMatch);
+        //     //location.isVisible(doesMatch);
+        //     return doesMatch;
+        // });
+    });
 }
 
 
