@@ -275,14 +275,13 @@
 
           success: function(data) {
 
-              console.log(data.response);
-              console.log("name: ", data.response.venue.name); // logs venue's name to the console
+              // console.log(data.response);
+              // console.log("name: ", data.response.venue.name); // logs venue's name to the console
 
               var myFoursquareData = ('<div>' + data.response.venue.name + 
-                '</div>' + '<div> Successfully retrieved Foursquare Data</div>' + 
-                '<div>' + 'contact: ' + data.response.venue.contact.formattedPhone + '</div>' +
-                '<div>' + 'location: ' + data.response.venue.location.address + '</div>' +
-                '<div>' + 'url: ' + '<a href =' + data.response.venue.url + '></a>' + '</div>');
+                '<div>' + 'Address: ' + data.response.venue.location.address + '</div>' +
+                '<div>' + 'Phone: ' + data.response.venue.contact.formattedPhone + '</div>' +
+                '<div>' + 'url: ' + '<a href ="' + data.response.venue.url + '"">Homepage</a>' + '</div>');
 
               // Open the infowindow on the correct marker.
               infowindow.open(map, marker);
@@ -312,6 +311,46 @@
       new google.maps.Size(21,34));
     return markerImage;
   }
+
+
+function viewModel() {
+
+  var self = this;
+      self.markers = [];
+      self.filter = ko.observable("");
+      // track user input
+      self.search = ko.observable("");
+      self.filterItems = ko.observableArray(defaultLocations);
+      
+      //console.log(self.filterItems())
+      self.bounce = function(location) {
+        // console.log(location)
+        largeInfowindow.open(map, location.marker)
+      }
+
+      //ko.utils.arrayFilter - filter the items using the filter text
+      self.filterSearchItems = ko.computed(function(){
+          
+          return ko.utils.arrayFilter(self.filterItems(), function (location){
+              var search = location.name.toLowerCase().indexOf(self.filter().toLowerCase());
+              
+              if (search == -1) {
+                location.marker.setVisible(false);
+              } else {
+                location.marker.setVisible(true);
+              }
+              return search >= 0;
+              
+              // console.log("filterSearchItems");
+              //var name = location.name.toLowerCase();
+              // var doesMatch = location.name().toLowerCase().indexOf(search) >= 0;
+
+              // console.log(name, search, doesMatch);
+              //location.isVisible(doesMatch);
+              // return doesMatch;
+          });
+      });
+}
 
 
 function loadData() {
@@ -349,42 +388,6 @@ function loadData() {
     });
 
 }
-
-
-function viewModel() {
-
-  var self = this;
-    self.markers = [];
-    self.filter = ko.observable("");
-    // track user input
-    self.search = ko.observable();
-    self.filterItems = ko.observableArray(defaultLocations);
-    
-    //console.log(self.filterItems())
-    self.bounce = function(location) {
-      // console.log(location)
-      largeInfowindow.open(map, location.marker)
-    }
-
-    //ko.utils.arrayFilter - filter the items using the filter text
-    self.filterSearchItems = ko.computed(function(){
-        var search = self.filter().toLowerCase();
-        console.log("filterSearchItems");
-
-
-
-
-        // return ko.utils.arrayFilter(self.filterItems(), function (location){
-        //     var name = location.name.toLowerCase();
-        //     var doesMatch = location.name().toLowerCase().indexOf(search) >= 0;
-
-        //     console.log(name, search, doesMatch);
-        //     //location.isVisible(doesMatch);
-        //     return doesMatch;
-        // });
-    });
-}
-
 
 
 $("form-container").submit(loadData);
