@@ -10,6 +10,20 @@ html,
         height: 100%;
         position: relative;
       }
+      .form-container button {
+        width: 100%;
+
+        padding: 1em;
+        background: #c9e6ff;
+        border:0;
+        text-transform: uppercase;
+      }
+      .form-container button:hover, .form-container button:focus {
+        background: #92bde7;
+        color: #fff;
+        outline: 0;
+        transition: background-color 2s ease-out;
+      }
       input {
         font-size: 12px;
         width: 100px;
@@ -32,8 +46,9 @@ html,
       .matched { 
         background-color: yellow; 
       }
-      .n { 
-        text-align: right; 
+      ul {
+        list-style: none;
+        padding: 0;
       }
       hr {
         background: #D0D7D9;
@@ -58,15 +73,9 @@ html,
         text-align: left;
         width: 340px;
       }
-      #pano {
-        width: 200px;
-        height: 200px;
-      }
-      #places-search{
-        width: 84%;
-      }
       .text {
         font-size: 12px;
+        width: 100%;
       }
       .bgimg {
           position:fixed;
@@ -79,22 +88,14 @@ html,
       .weather-underground-container {
         font-size: 12px;
       }
-      .images-list {
-        margin: 0;
-        padding: 0;
-      }
       .weather-list {
         margin: 0;
         padding: 0;
       }
-      .article {
-        list-style-type: none;
-        padding:10px;
-        border-top: 1px solid #CCC;
-      }
-      #zoom-to-area {
-        width: 24%;
-      }
-      .article:first-child {
-        border-top:none;
+      /* LARGE SCREENS */
+      @media(min-width:700px){
+        .main-container{
+          display: grid;
+        }
+
       }

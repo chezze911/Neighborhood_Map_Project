@@ -7,12 +7,12 @@
 
 
   var defaultLocations = [
-      {name: 'Misora Apartments', position: {lat: 37.319926, lng: -121.946511}, id: "5920f1031de7652db3e0ed2f"},
-      {name: 'Park Kiely Apartments', position: {lat: 37.319817, lng: -121.976738}, id: "4fbc0c03e4b0c3466b4f3e55"},
-      {name: 'West Park Apartments', position: {lat: 37.300655, lng: -121.953355}, id: "4fa88798e4b0f380f2aa2182"},
-      {name: 'The Pierce', position: {lat: 37.327007, lng: -121.884473},id: "58d1c4838ab03f3added7502"},
-      {name: 'Fruitdale Station Apartments', position: {lat: 37.309412, lng: -121.918435}, id: "4b292153f964a520589924e3"},
-      {name: 'Avalon at Cahill Park', position: {lat: 37.331571, lng: -121.905183}, id: "54063e27498ed430b363688e"}
+      {name: 'Pho Y #1', position: {lat: 37.305973, lng: -121.812203}, id: "4ac8f48ff964a52092bd20e3"},
+      {name: 'Khanhs', position: {lat: 37.321959, lng: -121.950478}, id: "4a4149d1f964a5200aa51fe3"},
+      {name: 'Vung Tau Restaurant', position: {lat: 37.341639, lng: -121.879504}, id: "4aabfe9df964a520735b20e3"},
+      {name: 'Huong Lan Sandwich', position: {lat: 37.321542, lng: -121.827426},id: "4b37b9f3f964a520174525e3"},
+      {name: 'Gio Cha Duc Huong Sandwich', position: {lat: 37.331328, lng: -121.855022}, id: "53b739f0498e1b9ab96408aa"},
+      {name: 'Bun Bo Hue An Nam', position: {lat: 37.328845, lng: -121.858199}, id: "4b2d9bdff964a52081d924e3"}
     ];
 
   function getContent(data) {
@@ -340,7 +340,7 @@ function viewModel() {
                 location.marker.setVisible(true);
               }
               return search >= 0;
-              
+
               // console.log("filterSearchItems");
               //var name = location.name.toLowerCase();
               // var doesMatch = location.name().toLowerCase().indexOf(search) >= 0;
