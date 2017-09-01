@@ -169,7 +169,7 @@
 
     // Constructor creates a new map - only center and zoom are required.
     map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: 37.3335, lng: -121.922},
+      center: {lat: 37.335187, lng: -121.881072},
       zoom: 13,
       styles: styles,
       mapTypeControl: false

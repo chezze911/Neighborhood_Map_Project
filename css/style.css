@@ -19,7 +19,7 @@ html,
         text-transform: uppercase;
       }
       .form-container button:hover, .form-container button:focus {
-        background: #92bde7;
+        background: #44ff00;
         color: #fff;
         outline: 0;
         transition: background-color 2s ease-out;
@@ -42,9 +42,6 @@ html,
       }
       h3 { f
         font-weight: bold; 
-      }
-      .matched { 
-        background-color: yellow; 
       }
       ul {
         list-style: none;
