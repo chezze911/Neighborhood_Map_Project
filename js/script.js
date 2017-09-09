@@ -332,9 +332,13 @@ function viewModel() {
       self.filterSearchItems = ko.computed(function(){
           
           return ko.utils.arrayFilter(self.filterItems(), function (location){
-              var search = location.name.toLowerCase().indexOf(self.filter().toLowerCase());
               
-              console.log(search);
+              var name = location.name.toLowerCase();
+
+              var search = name.indexOf(self.filter().toLowerCase());
+              
+              console.log(name, search);
+
               if (search == -1) {
                 location.marker.setVisible(false);
               } else {
