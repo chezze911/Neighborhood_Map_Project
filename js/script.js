@@ -293,7 +293,7 @@
               }
             }) 
             error: {
-                  infowindow.setContent('<div>' + marker.title + '</div>' + '<div>No Foursquare Data Returned</div>');
+                  infowindow.setContent('<div>' + marker.title + '</div>' + '<div>Error:  No Foursquare Data Returned</div>');
                   }
               }
       };
@@ -324,7 +324,7 @@ function viewModel() {
       
       //console.log(self.filterItems())
       self.bounce = function(location) {
-        // console.log(location)
+        console.log(location)
         largeInfowindow.open(map, location.marker)
       }
 
@@ -335,7 +335,6 @@ function viewModel() {
               var search = location.name.toLowerCase().indexOf(self.filter().toLowerCase());
               
               console.log(search);
-              console.log(self.filterItems)
               if (search == -1) {
                 location.marker.setVisible(false);
               } else {
