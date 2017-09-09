@@ -283,13 +283,13 @@
                 '<div>' + 'Phone: ' + data.response.venue.contact.formattedPhone + '</div>' +
                 '<div>' + 'url: ' + '<a href ="' + data.response.venue.url + '"">Homepage</a>' + '</div>');
 
-              // Open the infowindow on the correct marker.
-              infowindow.open(map, marker);
               marker.setAnimation(google.maps.Animation.BOUNCE);
               setTimeout(function(){
                 marker.setAnimation(null);
               }, 800);
               infowindow.setContent(myFoursquareData);
+                // Open the infowindow on the correct marker.
+                infowindow.open(map, marker);
               }
             }) 
             error: {
@@ -319,13 +319,15 @@ function viewModel() {
       self.markers = [];
       self.filter = ko.observable("");
       // track user input
-      self.search = ko.observable("");
+      self.doesMatch = ko.observable("");
       self.filterItems = ko.observableArray(defaultLocations);
       
       //console.log(self.filterItems())
       self.bounce = function(location) {
         console.log(location)
-        largeInfowindow.open(map, location.marker)
+        // largeInfowindow.open(map, location.marker)
+        // allows a single list location to be clicked and triggered on the map 
+        google.maps.event.trigger(location.marker, "click")
       }
 
       //ko.utils.arrayFilter - filter the items using the filter text
@@ -335,23 +337,17 @@ function viewModel() {
               
               var name = location.name.toLowerCase();
 
-              var search = name.indexOf(self.filter().toLowerCase());
+              var doesMatch = name.indexOf(self.filter().toLowerCase());
               
-              console.log(name, search);
+              console.log(name, doesMatch);
 
-              if (search == -1) {
+              if (doesMatch == -1) {
                 location.marker.setVisible(false);
               } else {
                 location.marker.setVisible(true);
               }
-              return search >=0;
-
-              //var name = location.name.toLowerCase();
-              // var doesMatch = location.name().toLowerCase().indexOf(search) >= 0;
-
-              // console.log(name, search, doesMatch);
-              //location.isVisible(doesMatch);
-              // return doesMatch;
+              return doesMatch >=0;
+              
           });
       });
 }
