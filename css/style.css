@@ -6,10 +6,10 @@ html,
         margin: 0;
         padding: 0;
       }
-      .main-container {
+      /*.main-container {
         height: 100%;
         position: relative;
-      }
+      }*/
       .form-container button {
         width: 100%;
 
@@ -92,7 +92,8 @@ html,
       /* LARGE SCREENS */
       @media(min-width:700px){
         .main-container{
-          display: grid;
+          height: 100%;
+          position: relative;
         }
 
       }

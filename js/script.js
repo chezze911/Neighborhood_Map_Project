@@ -334,14 +334,15 @@ function viewModel() {
           return ko.utils.arrayFilter(self.filterItems(), function (location){
               var search = location.name.toLowerCase().indexOf(self.filter().toLowerCase());
               
+              console.log(search);
+              console.log(self.filterItems)
               if (search == -1) {
                 location.marker.setVisible(false);
               } else {
                 location.marker.setVisible(true);
               }
-              return search >= 0;
+              return search >=0;
 
-              // console.log("filterSearchItems");
               //var name = location.name.toLowerCase();
               // var doesMatch = location.name().toLowerCase().indexOf(search) >= 0;
 
