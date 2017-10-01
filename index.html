@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="main-container">
-      <div class="options-box animated bounceInLeft">
+      <div nav id="drawer" class="options-box">
           <h1>Find The Best Vietnamese Food in <br>
            San Jose, CA </h1>
           <div>
@@ -95,6 +95,26 @@
               <h3 id="weather-underground-forecast" class="weather-list">Weather Underground will tell you here!</h3>
             </div>
             <hr>
+
+            <div class ="add-location">
+              <h3> Add Location </h3>
+              <!--@TODO - validation -->
+              <form id="add-location-form">
+                <p>
+                  <label> Name </label>
+                  <input type="text" name="name" id="name">
+                </p>
+                <p>
+                  <label> Position </label>
+                  <input type="text" name="position" id="position">
+                </p>
+                <p>
+                  <label> Foursquare ID </label>
+                  <input type="text" name="foursquare_id" id="foursquare_id">
+                </p>
+                <button type="submit">Submit</button>
+              </form>
+            </div>
 
           </div>
         </div>

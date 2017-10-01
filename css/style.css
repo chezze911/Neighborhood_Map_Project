@@ -6,10 +6,10 @@ html,
         margin: 0;
         padding: 0;
       }
-      /*.main-container {
+      .main-container {
         height: 100%;
         position: relative;
-      }*/
+      }
       .form-container button {
         width: 100%;
 
@@ -19,6 +19,20 @@ html,
         text-transform: uppercase;
       }
       .form-container button:hover, .form-container button:focus {
+        background: #44ff00;
+        color: #fff;
+        outline: 0;
+        transition: background-color 2s ease-out;
+      }
+      .add-location button {
+        width: 100%;
+
+        padding: 1em;
+        background: #c9e6ff;
+        border:0;
+        text-transform: uppercase;
+      }
+      .add-location button:hover, .form-container button:focus {
         background: #44ff00;
         color: #fff;
         outline: 0;
@@ -60,7 +74,7 @@ html,
         position: absolute;
         right: 0px;
       }
-      .options-box {
+      /*.options-box {
         background: #fff;
         border: 1px solid #999;
         border-radius: 3px;
@@ -69,19 +83,32 @@ html,
         padding: 10px 10px 30px 10px;
         text-align: left;
         width: 340px;
+      }*/
+      nav {
+        width: 300px;
+        position: absolute;
+        /* This trasform moves the drawer off canvas. */
+        -webkit-transform: translate(-300px, 0);
+        transform: translate(-300px, 0);
+        /* Optionally, we animate the drawer. */
+        transition: transform 0.3s ease;
+      }
+      nav.open {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
       }
       .text {
         font-size: 12px;
         width: 100%;
       }
-      .bgimg {
+      /*.bgimg {
           position:fixed;
           top: 0;
           left: 0;
           width:100%;
           z-index:-1;
           opacity:1;
-      }
+      }*/
       .weather-underground-container {
         font-size: 12px;
       }
@@ -90,10 +117,18 @@ html,
         padding: 0;
       }
       /* LARGE SCREENS */
-      @media(min-width:700px){
-        .main-container{
-          height: 100%;
+      @media screen and (min-width: 600px){
+        nav {
           position: relative;
+          transform: translate(0, 0);
+        }
+        body {
+          display: flex;
+          flex-flow: row nowrap;
+        }
+        .main-container{
+          width: auto;
+          flex-grow: 1;
         }
 
       }

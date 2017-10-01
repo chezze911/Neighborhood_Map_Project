@@ -1,5 +1,12 @@
 
+  // Listen for form submit
+  document.getElementById("add-location-form").addEventListener('submit', submitForm);
 
+  function submitForm(e){
+    e.preventDefault();
+
+    console.log(123);
+  }
   var map;
 
   // Create a new blank array for all the listing markers.
@@ -20,6 +27,11 @@
     // build the content string
     return contentString;
 }
+
+  menu.addEventListener('click', function(e) {
+  drawer.classList.toggle('open');
+  e.stopPropagation();
+});
 
 //infoWindow.setContent(getContent(myFourSquareData));
 
@@ -347,7 +359,7 @@ function viewModel() {
                 location.marker.setVisible(true);
               }
               return doesMatch >=0;
-              
+
           });
       });
 }
