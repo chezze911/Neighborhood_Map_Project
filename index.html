@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name=viewport http-equiv="Content-Type" content="text/html;charset=utf-8, initial-scale=1" />
+    <meta name=viewport, http-equiv="Content-Type" content="text/html;charset=utf-8, initial-scale=1" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <div class="main-container">
+    <div main class="main-container">
       <div nav id="drawer" class="options-box">
+        <a id="menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z" />
+          </svg>
+        </a>
           <h1>Find The Best Vietnamese Food in <br>
            San Jose, CA </h1>
           <div>
@@ -97,20 +102,22 @@
             <hr>
 
             <div class ="add-location">
-              <h3> Add Location </h3>
-              <!--@TODO - validation -->
+              <h3> Add a Favorite Location </h3>
+              <div class="alert">Your favorite location has been sent</div>
+              
+
               <form id="add-location-form">
                 <p>
-                  <label> Name </label>
-                  <input type="text" name="name" id="name">
+                  <label> Name: </label>
+                  <input type="text" name="name" id="name" required>
                 </p>
                 <p>
-                  <label> Position </label>
-                  <input type="text" name="position" id="position">
+                  <label> Position(lat,lon): </label>
+                  <input type="text" name="position" id="position" required>
                 </p>
                 <p>
-                  <label> Foursquare ID </label>
-                  <input type="text" name="foursquare_id" id="foursquare_id">
+                  <label> Foursquare ID: </label>
+                  <input type="text" name="foursquare_ID" id="foursquare_ID" required>
                 </p>
                 <button type="submit">Submit</button>
               </form>
@@ -123,6 +130,7 @@
     
     <script src ="js/bower_components/knockout/dist/knockout.js"></script>
     <script src="js/libs/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
     <script src="js/script.js"></script>
     <script src=
         "https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&libraries=places,geometry&v=3&callback=initMap">

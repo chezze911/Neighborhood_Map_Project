@@ -1,12 +1,63 @@
+  
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAsrsHacspv__vIaNw-om-plcowHHjZz4w",
+    authDomain: "neighborhoodmapprojec.firebaseapp.com",
+    databaseURL: "https://neighborhoodmapprojec.firebaseio.com",
+    projectId: "neighborhoodmapprojec",
+    storageBucket: "neighborhoodmapprojec.appspot.com",
+    messagingSenderId: "22228876644"
+  };
+  firebase.initializeApp(config);
+
+  // Reference messages collection
+  var messagesRef = firebase.database().ref('messages');
 
   // Listen for form submit
   document.getElementById("add-location-form").addEventListener('submit', submitForm);
 
+  // Submit form
   function submitForm(e){
     e.preventDefault();
 
-    console.log(123);
+    //console.log(123);
+    // Get values
+    var name = getInputVal('name');
+    var position = getInputVal('position');
+    var foursquare_ID = getInputVal('foursquare_ID');
+
+    //console.log(name);
+
+    // Save message
+    saveMessage(name, position, foursquare_ID);
+
+  // Show alert
+  document.querySelector('.alert').style.display = 'block';
+
+  // Hide alert after 3 seconds
+  setTimeout(function(){
+    document.querySelector('.alert').style.display = 'none';
+  },3000);
+
+  // Clear form
+  document.getElementById('add-location-form').reset();
+}
+
+  // Function to get form values
+  function getInputVal(id){
+    return document.getElementById(id).value;
   }
+
+  // Save message to firebase
+  function saveMessage(name, position, foursquare_ID){
+    var newMessageRef = messagesRef.push();
+    newMessageRef.set({
+      name: name,
+      position: position, 
+      foursquare_ID: foursquare_ID
+    });
+  }
+
   var map;
 
   // Create a new blank array for all the listing markers.
@@ -28,12 +79,22 @@
     return contentString;
 }
 
-  menu.addEventListener('click', function(e) {
+/* 
+* Open the drawer when the menu icon is clicked
+*/
+var menu = document.querySelector('#menu');
+var main = document.querySelector('#main-container');
+var drawer = document.querySelector('#drawer');
+
+menu.addEventListener('click', function(e) {
   drawer.classList.toggle('open');
   e.stopPropagation();
 });
 
-//infoWindow.setContent(getContent(myFourSquareData));
+main.addEventListener('click', function() {
+  drawer.classList.remove('open');
+});
+
 
 
   function initMap() {

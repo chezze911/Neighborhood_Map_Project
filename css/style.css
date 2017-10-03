@@ -74,7 +74,12 @@ html,
         position: absolute;
         right: 0px;
       }
-      /*.options-box {
+      a#menu svg {
+        width: 40px;
+        /* This declares the color of the SVG */
+        fill: #000;
+      }
+      .options-box {
         background: #fff;
         border: 1px solid #999;
         border-radius: 3px;
@@ -83,9 +88,10 @@ html,
         padding: 10px 10px 30px 10px;
         text-align: left;
         width: 340px;
-      }*/
+      }
       nav {
         width: 300px;
+        height: 100%;
         position: absolute;
         /* This trasform moves the drawer off canvas. */
         -webkit-transform: translate(-300px, 0);
@@ -115,6 +121,15 @@ html,
       .weather-list {
         margin: 0;
         padding: 0;
+      }
+
+      .alert{
+        text-align: center;
+        padding: 10px;
+        background: #79c879;
+        color: #fff;
+        margin-bottom: 10px;
+        display: none;
       }
       /* LARGE SCREENS */
       @media screen and (min-width: 600px){
