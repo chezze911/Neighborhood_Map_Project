@@ -115,13 +115,13 @@ html,
           z-index:-1;
           opacity:1;
       }*/
-      .weather-underground-container {
+      /*.weather-underground-container {
         font-size: 12px;
       }
       .weather-list {
         margin: 0;
         padding: 0;
-      }
+      }*/
 
       .alert{
         text-align: center;

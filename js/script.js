@@ -91,9 +91,9 @@ menu.addEventListener('click', function(e) {
   e.stopPropagation();
 });
 
-main.addEventListener('click', function() {
-  drawer.classList.remove('open');
-});
+// main.addEventListener('click', function() {
+//   drawer.classList.remove('open');
+// });
 
 
 
@@ -278,7 +278,7 @@ main.addEventListener('click', function() {
     for (var i = 0; i < defaultLocations.length; i++) { console.log("here")
       // Get the position from the location array.
       var position = defaultLocations[i].position;
-      console.log( defaultLocations[i])
+      // console.log( defaultLocations[i])
       var title = defaultLocations[i].name;
       // Create a marker per location, and put into markers array.
       var marker = new google.maps.Marker({
@@ -348,13 +348,14 @@ main.addEventListener('click', function() {
 
           success: function(data) {
 
-              // console.log(data.response);
+              console.log(data.response);
               // console.log("name: ", data.response.venue.name); // logs venue's name to the console
 
               var myFoursquareData = ('<div>' + data.response.venue.name + 
                 '<div>' + 'Address: ' + data.response.venue.location.address + '</div>' +
                 '<div>' + 'Phone: ' + data.response.venue.contact.formattedPhone + '</div>' +
-                '<div>' + 'url: ' + '<a href ="' + data.response.venue.url + '"">Homepage</a>' + '</div>');
+                '<div>' + 'Foursquare Url: ' + '<a href ="' + data.response.venue.canonicalUrl + '"">For more details</a>' + '</div>' +
+                '<div>' + 'Rating: ' + data.response.venue.rating + '/10' + '</div>');
 
               marker.setAnimation(google.maps.Animation.BOUNCE);
               setTimeout(function(){
@@ -412,7 +413,7 @@ function viewModel() {
 
               var doesMatch = name.indexOf(self.filter().toLowerCase());
               
-              console.log(name, doesMatch);
+              // console.log(name, doesMatch);
 
               if (doesMatch == -1) {
                 location.marker.setVisible(false);
@@ -426,43 +427,43 @@ function viewModel() {
 }
 
 
-function loadData() {
+// function loadData() {
 
-    var $body = $('body');
-    var $wuHeaderElem = $('#weather-underground-header');
-    var $wuElem = $('#weather-underground-forecast');
+//     var $body = $('body');
+//     var $wuHeaderElem = $('#weather-underground-header');
+//     var $wuElem = $('#weather-underground-forecast');
 
-    // clear out old data before new request
-    $wuElem.text("");
+//     // clear out old data before new request
+//     $wuElem.text("");
 
-    // load streetview
-    // var streetStr = $('#street').val();
-    var cityStr = $('#city').val();
-    var stateStr = $('#state').val();
-    // var cityStr = 'San Jose';
-    // var stateStr = 'CA';
-    // var address = streetStr + ', ' + cityStr + ', ' + stateStr;
+//     // load streetview
+//     // var streetStr = $('#street').val();
+//     var cityStr = $('#city').val();
+//     var stateStr = $('#state').val();
+//     // var cityStr = 'San Jose';
+//     // var stateStr = 'CA';
+//     // var address = streetStr + ', ' + cityStr + ', ' + stateStr;
 
-    // weather underground AJAX request goes here
-    // append weather forecast for San Jose, CA to wuElem, weather-underground-forecast
-    // display error messsage if we cannot get JSON
-    var weatherundergroundUrl = "http://api.wunderground.com/api/65646c8c86b0eefe/conditions/q/" + stateStr  + "/" + cityStr + ".json";
+//     // weather underground AJAX request goes here
+//     // append weather forecast for San Jose, CA to wuElem, weather-underground-forecast
+//     // display error messsage if we cannot get JSON
+//     var weatherundergroundUrl = "http://api.wunderground.com/api/65646c8c86b0eefe/conditions/q/" + stateStr  + "/" + cityStr + ".json";
 
-    $.getJSON(weatherundergroundUrl, function(data) {  
+//     $.getJSON(weatherundergroundUrl, function(data) {  
       
-      $wuHeaderElem.text('The current weather in ' + cityStr + ', ' + stateStr + ':');
-      info = data.current_observation;
+//       $wuHeaderElem.text('The current weather in ' + cityStr + ', ' + stateStr + ':');
+//       info = data.current_observation;
 
-      $wuElem.append('<ul>' + info.weather + '<br>' + ('<img src= " ' + info.icon_url + '" alt="weather Icon">') + '</ul>');
-      $wuElem.append('<ul>' + Math.round(info.temp_f) + '°F' + ' / ' + Math.round(info.temp_c) + '°C</ul>');
-      $wuElem.append('<ul> Humidity: ' +  info.relative_humidity + '</ul>');
-    }).error(function(e){
-        $wuHeaderElem.text("Sorry, weather underground could not be loaded. Please try again.");
-    });
+//       $wuElem.append('<ul>' + info.weather + '<br>' + ('<img src= " ' + info.icon_url + '" alt="weather Icon">') + '</ul>');
+//       $wuElem.append('<ul>' + Math.round(info.temp_f) + '°F' + ' / ' + Math.round(info.temp_c) + '°C</ul>');
+//       $wuElem.append('<ul> Humidity: ' +  info.relative_humidity + '</ul>');
+//     }).error(function(e){
+//         $wuHeaderElem.text("Sorry, weather underground could not be loaded. Please try again.");
+//     });
 
-}
+// }
 
 
-$("form-container").submit(loadData);
+// $("form-container").submit(loadData);
 
 
