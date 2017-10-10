@@ -101,12 +101,14 @@
             </div>
             <hr> -->
 
-            <div class ="add-location">
+            <div class="add-location" id="add-location">
               <h4> Add a Favorite Location </h4>
               <div class="alert">Your favorite location has been sent</div>
               
 
               <form id="add-location-form">
+                <!-- <input type=text id="input"> -->
+                  <!-- <input type=button onlick="addFavoriteLocation()" value="Add"/> -->
                 <p>
                   <label> Name: </label>
                   <input type="text" name="name" id="name" required>
@@ -119,7 +121,7 @@
                   <label> Foursquare ID: </label>
                   <input type="text" name="foursquare_ID" id="foursquare_ID" required>
                 </p>
-                <button type="submit">Submit</button>
+                <button type="submit" onclick="addFavoriteLocation()">Submit</button>
               </form>
             </div>
 

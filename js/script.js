@@ -58,6 +58,8 @@
     });
   }
 
+
+
   var map;
 
   // Create a new blank array for all the listing markers.
@@ -66,7 +68,7 @@
 
   var defaultLocations = [
       {name: 'Pho Y #1', position: {lat: 37.305973, lng: -121.812203}, id: "4ac8f48ff964a52092bd20e3"},
-      {name: 'Khanhs', position: {lat: 37.321959, lng: -121.950478}, id: "4a4149d1f964a5200aa51fe3"},
+      {name: 'Khanh\'s', position: {lat: 37.321959, lng: -121.950478}, id: "4a4149d1f964a5200aa51fe3"},
       {name: 'Vung Tau Restaurant', position: {lat: 37.341639, lng: -121.879504}, id: "4aabfe9df964a520735b20e3"},
       {name: 'Huong Lan Sandwich', position: {lat: 37.321542, lng: -121.827426},id: "4b37b9f3f964a520174525e3"},
       {name: 'Gio Cha Duc Huong Sandwich', position: {lat: 37.331328, lng: -121.855022}, id: "53b739f0498e1b9ab96408aa"},
@@ -78,6 +80,20 @@
     // build the content string
     return contentString;
 }
+
+// function to push user input values to defaultLocations array
+  function addFavoriteLocation(){
+    var x = document.getElementById('add-location');
+
+    defaultLocations.push(document.getElementsByClassName('add-location-form'));
+    // defaultLocations.push(document.getElementById('position').value);
+    // defaultLocations.push(document.getElementById('foursquare_ID').value);
+
+    x.innerHTML = defaultLocations.join('<br/>');
+    console.log(defaultLocations)
+  }
+
+// console.log(defaultLocations)
 
 /* 
 * Open the drawer when the menu icon is clicked
@@ -91,9 +107,9 @@ menu.addEventListener('click', function(e) {
   e.stopPropagation();
 });
 
-// main.addEventListener('click', function() {
-//   drawer.classList.remove('open');
-// });
+main.addEventListener('click', function() {
+  drawer.classList.remove('open');
+});
 
 
 
