@@ -83,9 +83,10 @@
 
 // function to push user input values to defaultLocations array
   function addFavoriteLocation(){
-    var x = document.getElementById('add-location');
+    var x = document.getElementById('add-location-form');
 
-    defaultLocations.push(document.getElementsByClassName('add-location-form'));
+    defaultLocations.push(document.querySelectorAll('name', 'position', 'foursquare_ID'));
+    // defaultLocations.push(document.getElementById('name').value);
     // defaultLocations.push(document.getElementById('position').value);
     // defaultLocations.push(document.getElementById('foursquare_ID').value);
 
@@ -93,7 +94,6 @@
     console.log(defaultLocations)
   }
 
-// console.log(defaultLocations)
 
 /* 
 * Open the drawer when the menu icon is clicked
