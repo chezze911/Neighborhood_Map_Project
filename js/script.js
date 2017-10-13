@@ -84,8 +84,13 @@
 // function to push user input values to defaultLocations array
   function addFavoriteLocation(){
     var x = document.getElementById('add-location-form');
+    var y = {}
 
-    defaultLocations.push(document.querySelectorAll('name', 'position', 'foursquare_ID'));
+    y.position = {}
+
+    y.name = document.getElementById('name').value
+
+    defaultLocations.push(y);
     // defaultLocations.push(document.getElementById('name').value);
     // defaultLocations.push(document.getElementById('position').value);
     // defaultLocations.push(document.getElementById('foursquare_ID').value);
@@ -99,7 +104,7 @@
 * Open the drawer when the menu icon is clicked
 */
 var menu = document.querySelector('#menu');
-var main = document.querySelector('#main-container');
+var main = document.querySelector("#map");
 var drawer = document.querySelector('#drawer');
 
 menu.addEventListener('click', function(e) {
@@ -108,7 +113,7 @@ menu.addEventListener('click', function(e) {
 });
 
 main.addEventListener('click', function() {
-  drawer.classList.remove('open');
+  drawer.classList.add('open');
 });
 
 

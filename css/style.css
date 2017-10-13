@@ -89,7 +89,7 @@ html,
         text-align: left;
         width: 340px;
       }
-      nav {
+      #drawer {
         width: 300px;
         height: 100%;
         position: absolute;
@@ -99,7 +99,7 @@ html,
         /* Optionally, we animate the drawer. */
         transition: transform 0.3s ease;
       }
-      nav.open {
+      #drawer.open {
         -webkit-transform: translate(0, 0);
         transform: translate(0, 0);
       }
@@ -133,10 +133,6 @@ html,
       }
       /* LARGE SCREENS */
       @media screen and (min-width: 600px){
-        nav {
-          position: relative;
-          transform: translate(0, 0);
-        }
         body {
           display: flex;
           flex-flow: row nowrap;
@@ -145,4 +141,5 @@ html,
           width: auto;
           flex-grow: 1;
         }
+        
       }
