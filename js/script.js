@@ -104,11 +104,12 @@
 * Open the drawer when the menu icon is clicked
 */
 var menu = document.querySelector('#menu');
-var main = document.querySelector("#map");
+var main = document.querySelector('#map');
 var drawer = document.querySelector('#drawer');
 
 menu.addEventListener('click', function(e) {
   drawer.classList.toggle('open');
+  main.classList.toggle('open');
   e.stopPropagation();
 });
 

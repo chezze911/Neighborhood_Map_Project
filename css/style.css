@@ -68,13 +68,27 @@ html,
         border: none;
       }
       #map {
-        bottom:3px;
+        bottom: 3px;
         height: 100%;
-        left: 362px;
+        left: 323px;
         position: absolute;
         right: 0px;
+        z-index: 1;
+        /* This trasform moves the map in-sync with the drawer moving off canvas. */
+        -webkit-transform: translate(-323px, 0);
+        transform: translate(-323px, 0);
+        /* Optionally, we animate the map. */
+        transition: transform 0.3s ease;
+      }
+      #map.open {
+        -webkit-transform: translate(0, 0);
+        transform: translate(0, 0);
       }
       a#menu svg {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 2;
         width: 40px;
         /* This declares the color of the SVG */
         fill: #000;
@@ -86,6 +100,7 @@ html,
         height: 94%;
         line-height: 35px;
         padding: 10px 10px 30px 10px;
+        box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
         text-align: left;
         width: 340px;
       }
@@ -94,14 +109,15 @@ html,
         height: 100%;
         position: absolute;
         /* This trasform moves the drawer off canvas. */
-        -webkit-transform: translate(-300px, 0);
-        transform: translate(-300px, 0);
+        -webkit-transform: translate(-323px, 0);
+        transform: translate(-323px, 0);
         /* Optionally, we animate the drawer. */
         transition: transform 0.3s ease;
       }
       #drawer.open {
         -webkit-transform: translate(0, 0);
         transform: translate(0, 0);
+
       }
       .text {
         font-size: 12px;
@@ -141,5 +157,5 @@ html,
           width: auto;
           flex-grow: 1;
         }
-        
+
       }
