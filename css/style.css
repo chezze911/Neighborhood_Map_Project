@@ -123,21 +123,6 @@ html,
         font-size: 12px;
         width: 100%;
       }
-      /*.bgimg {
-          position:fixed;
-          top: 0;
-          left: 0;
-          width:100%;
-          z-index:-1;
-          opacity:1;
-      }*/
-      /*.weather-underground-container {
-        font-size: 12px;
-      }
-      .weather-list {
-        margin: 0;
-        padding: 0;
-      }*/
 
       .alert{
         text-align: center;

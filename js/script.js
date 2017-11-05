@@ -20,13 +20,11 @@
   function submitForm(e){
     e.preventDefault();
 
-    //console.log(123);
     // Get values
     var name = getInputVal('name');
     var position = getInputVal('position');
     var foursquare_ID = getInputVal('foursquare_ID');
 
-    //console.log(name);
 
     // Save message
     saveMessage(name, position, foursquare_ID);
@@ -48,9 +46,10 @@
     return document.getElementById(id).value;
   }
 
-  // Save message to firebase
+  // Save message to firebase and push to ko observable array
   function saveMessage(name, position, foursquare_ID){
     var newMessageRef = messagesRef.push();
+
     newMessageRef.set({
       name: name,
       position: position, 
@@ -75,30 +74,43 @@
       {name: 'Bun Bo Hue An Nam', position: {lat: 37.328845, lng: -121.858199}, id: "4b2d9bdff964a52081d924e3"}
     ];
 
-  function getContent(data) {
-    var contentString = ('<div>' + marker.title + '</div>');
-    // build the content string
-    return contentString;
-}
+//   function getContent(data) {
+//     var contentString = ('<div>' + marker.title + '</div>');
+//     // build the content string
+//     return contentString;
+// }
 
-// function to push user input values to defaultLocations array
-  function addFavoriteLocation(){
-    var x = document.getElementById('add-location-form');
-    var y = {}
+// // function to push user input values to ko observable array
+//   function addFavoriteLocation(){
+//     var x = document.getElementById('add-location-form');
+//     var y = {}
 
-    y.position = {}
+//     // y.position_lat = {}
 
-    y.name = document.getElementById('name').value
+//     // y.position_lon = {}
 
-    defaultLocations.push(y);
-    // defaultLocations.push(document.getElementById('name').value);
-    // defaultLocations.push(document.getElementById('position').value);
-    // defaultLocations.push(document.getElementById('foursquare_ID').value);
+//     y.name = document.getElementById('name').value
 
-    x.innerHTML = defaultLocations.join('<br/>');
-    console.log(defaultLocations)
-  }
+//     y.position_lat = document.getElementById('position_lat').value
+//     y.position_lon = document.getElementById('position_lon').value
 
+//     y.foursquare_ID = document.getElementById('foursquare_ID').value
+
+//     viewModel(self.filterItems).push(y);
+//     // defaultLocations.push(document.getElementById('name').value);
+//     // defaultLocations.push(document.getElementById('position').value);
+//     // defaultLocations.push(document.getElementById('foursquare_ID').value);
+
+//     x.innerHTML = viewModel(self.filterItems).join('<br/>');
+//     console.log(viewModel(self.filterItems))
+//   }
+
+// // function to create new marker for user input data
+//   function addNewLocationMarker(){
+
+//   }
+
+// // function to make new api request call to retrieve foursquare data
 
 /* 
 * Open the drawer when the menu icon is clicked
@@ -362,16 +374,13 @@ main.addEventListener('click', function() {
           data: {
             client_id: CLIENT_ID,
             client_secret: CLIENT_SECRET,
-            // near: "San Jose",
             v: version,
-            //query: "donuts",
           },
           async: true,
 
           success: function(data) {
 
               console.log(data.response);
-              // console.log("name: ", data.response.venue.name); // logs venue's name to the console
 
               var myFoursquareData = ('<div>' + data.response.venue.name + 
                 '<div>' + 'Address: ' + data.response.venue.location.address + '</div>' +
@@ -418,10 +427,8 @@ function viewModel() {
       self.doesMatch = ko.observable("");
       self.filterItems = ko.observableArray(defaultLocations);
       
-      //console.log(self.filterItems())
       self.bounce = function(location) {
         console.log(location)
-        // largeInfowindow.open(map, location.marker)
         // allows a single list location to be clicked and triggered on the map 
         google.maps.event.trigger(location.marker, "click")
       }
@@ -435,7 +442,6 @@ function viewModel() {
 
               var doesMatch = name.indexOf(self.filter().toLowerCase());
               
-              // console.log(name, doesMatch);
 
               if (doesMatch == -1) {
                 location.marker.setVisible(false);
@@ -449,43 +455,5 @@ function viewModel() {
 }
 
 
-// function loadData() {
-
-//     var $body = $('body');
-//     var $wuHeaderElem = $('#weather-underground-header');
-//     var $wuElem = $('#weather-underground-forecast');
-
-//     // clear out old data before new request
-//     $wuElem.text("");
-
-//     // load streetview
-//     // var streetStr = $('#street').val();
-//     var cityStr = $('#city').val();
-//     var stateStr = $('#state').val();
-//     // var cityStr = 'San Jose';
-//     // var stateStr = 'CA';
-//     // var address = streetStr + ', ' + cityStr + ', ' + stateStr;
-
-//     // weather underground AJAX request goes here
-//     // append weather forecast for San Jose, CA to wuElem, weather-underground-forecast
-//     // display error messsage if we cannot get JSON
-//     var weatherundergroundUrl = "http://api.wunderground.com/api/65646c8c86b0eefe/conditions/q/" + stateStr  + "/" + cityStr + ".json";
-
-//     $.getJSON(weatherundergroundUrl, function(data) {  
-      
-//       $wuHeaderElem.text('The current weather in ' + cityStr + ', ' + stateStr + ':');
-//       info = data.current_observation;
-
-//       $wuElem.append('<ul>' + info.weather + '<br>' + ('<img src= " ' + info.icon_url + '" alt="weather Icon">') + '</ul>');
-//       $wuElem.append('<ul>' + Math.round(info.temp_f) + '°F' + ' / ' + Math.round(info.temp_c) + '°C</ul>');
-//       $wuElem.append('<ul> Humidity: ' +  info.relative_humidity + '</ul>');
-//     }).error(function(e){
-//         $wuHeaderElem.text("Sorry, weather underground could not be loaded. Please try again.");
-//     });
-
-// }
-
-
-// $("form-container").submit(loadData);
 
 
