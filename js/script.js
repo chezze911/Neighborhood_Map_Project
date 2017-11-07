@@ -309,7 +309,8 @@ main.addEventListener('click', function() {
 
    largeInfowindow = new google.maps.InfoWindow();
     // The following group uses the location array to create an array of markers on initialize.
-    for (var i = 0; i < defaultLocations.length; i++) { console.log("here")
+    for (var i = 0; i < defaultLocations.length; i++) {
+      /*jshint loopfunc: true */
       // Get the position from the location array.
       var position = defaultLocations[i].position;
       // console.log( defaultLocations[i])
@@ -361,7 +362,7 @@ main.addEventListener('click', function() {
 
       var CLIENT_ID = 'VSGRHLGZSLZDC0H3KZVLZJCBZOQ4VBO5DZIEWEVKXGXMQ0SB';
       var CLIENT_SECRET = 'LNCN2UO3VNFB0Y5C14CJTSELFPJ5QOLL3F41G1IWKAL2YI1U';
-      var url = 'https://api.foursquare.com/v2/venues/'
+      var url = 'https://api.foursquare.com/v2/venues/';
       var version = '20130815';
 
       var foursquareID = defaultLocations[marker.id].id;
@@ -396,12 +397,12 @@ main.addEventListener('click', function() {
                 // Open the infowindow on the correct marker.
                 infowindow.open(map, marker);
               }
-            }) 
+            }); 
             error: {
                   infowindow.setContent('<div>' + marker.title + '</div>' + '<div>Error:  No Foursquare Data Returned</div>');
                   }
               }
-      };
+      }
 
   // This function takes in a COLOR, and then creates a new marker
   // icon of that color. The icon will be 21 px wide by 34 high, have an origin
@@ -428,11 +429,12 @@ function viewModel() {
       self.filterItems = ko.observableArray(defaultLocations);
       
       self.bounce = function(location) {
-        console.log(location)
         // allows a single list location to be clicked and triggered on the map 
-        google.maps.event.trigger(location.marker, "click")
-      }
+        google.maps.event.trigger(location.marker, "click");
+      };
+  
 
+  
       //ko.utils.arrayFilter - filter the items using the filter text
       self.filterSearchItems = ko.computed(function(){
           
@@ -453,7 +455,4 @@ function viewModel() {
           });
       });
 }
-
-
-
 
