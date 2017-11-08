@@ -302,7 +302,7 @@
       });
       
     }
-    ko.applyBindings(new viewModel());
+    ko.applyBindings(new ViewModel());
 
   }
 

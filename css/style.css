@@ -84,7 +84,7 @@ html,
         -webkit-transform: translate(0, 0);
         transform: translate(0, 0);
       }
-      a#menu svg {
+      .menu_icon {
         position: fixed;
         top: 15px;
         left: 15px;
