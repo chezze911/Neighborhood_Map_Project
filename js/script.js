@@ -74,60 +74,20 @@
       {name: 'Bun Bo Hue An Nam', position: {lat: 37.328845, lng: -121.858199}, id: "4b2d9bdff964a52081d924e3"}
     ];
 
-//   function getContent(data) {
-//     var contentString = ('<div>' + marker.title + '</div>');
-//     // build the content string
-//     return contentString;
-// }
 
-// // function to push user input values to ko observable array
-//   function addFavoriteLocation(){
-//     var x = document.getElementById('add-location-form');
-//     var y = {}
+  var menu = document.querySelector('#menu');
+  var main = document.querySelector('#map');
+  var drawer = document.querySelector('#drawer');
 
-//     // y.position_lat = {}
+  menu.addEventListener('click', function(e) {
+    drawer.classList.toggle('open');
+    main.classList.toggle('open');
+    e.stopPropagation();
+  });
 
-//     // y.position_lon = {}
-
-//     y.name = document.getElementById('name').value
-
-//     y.position_lat = document.getElementById('position_lat').value
-//     y.position_lon = document.getElementById('position_lon').value
-
-//     y.foursquare_ID = document.getElementById('foursquare_ID').value
-
-//     viewModel(self.filterItems).push(y);
-//     // defaultLocations.push(document.getElementById('name').value);
-//     // defaultLocations.push(document.getElementById('position').value);
-//     // defaultLocations.push(document.getElementById('foursquare_ID').value);
-
-//     x.innerHTML = viewModel(self.filterItems).join('<br/>');
-//     console.log(viewModel(self.filterItems))
-//   }
-
-// // function to create new marker for user input data
-//   function addNewLocationMarker(){
-
-//   }
-
-// // function to make new api request call to retrieve foursquare data
-
-/* 
-* Open the drawer when the menu icon is clicked
-*/
-var menu = document.querySelector('#menu');
-var main = document.querySelector('#map');
-var drawer = document.querySelector('#drawer');
-
-menu.addEventListener('click', function(e) {
-  drawer.classList.toggle('open');
-  main.classList.toggle('open');
-  e.stopPropagation();
-});
-
-main.addEventListener('click', function() {
-  drawer.classList.add('open');
-});
+  main.addEventListener('click', function() {
+    drawer.classList.add('open');
+  });
 
 
 
@@ -419,7 +379,7 @@ main.addEventListener('click', function() {
   }
 
 
-function viewModel() {
+function ViewModel() {
 
   var self = this;
       self.markers = [];
