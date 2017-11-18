@@ -30,7 +30,7 @@
         self.name(null);
         self.position(null);
         self.foursquare_ID(null);
-      }
+      };
 
     //var name = getInputVal('name');
     //var position = getInputVal('position');
