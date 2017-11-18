@@ -33,20 +33,19 @@
             <div class="add-location" id="add-location">
               <h4> Add a Favorite Location </h4>
               <div class="alert">Your favorite location has been sent</div>
-              
 
-              <form id="add-location-form">
+              <form data-bind="submit: add-location-form" id="add-location-form">
                 <p>
                   <label> Name: </label>
-                  <input type="text" name="name" id="name" required>
+                  <input type="text" data-bind="textInput: name" id="name" required>
                 </p>
                 <p>
                   <label> Position(lat,lon): </label>
-                  <input type="text" name="position_lat" id="position" required>
+                  <input type="text" data-bind="textInput: position" id="position" required>
                 </p>
                 <p>
                   <label> Foursquare ID: </label>
-                  <input type="text" name="foursquare_ID" id="foursquare_ID" required>
+                  <input type="text" data-bind="textInput: foursquare_ID" id="foursquare_ID" required>
                 </p>
                 <button type="submit">Submit</button>
               </form>
@@ -63,6 +62,12 @@
     <script src="js/script.js"></script>
     <script src=
         "https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&libraries=places,geometry&v=3&callback=initMap" async defer oneerror="mapError()">
+    // <script type="text/javascript">
+    //   var ViewModel = {
+    //     add-location-form : function(formElement) {
+    //       //...now do something
+    //     }
+    //   }
     </script>
     
 

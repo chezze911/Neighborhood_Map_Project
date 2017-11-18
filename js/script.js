@@ -14,16 +14,27 @@
   var messagesRef = firebase.database().ref('messages');
 
   // Listen for form submit
-  document.getElementById("add-location-form").addEventListener('submit', submitForm);
+  document.getElementById("add-location-form");
 
   // Submit form
   function submitForm(e){
     e.preventDefault();
 
     // Get values
-    var name = getInputVal('name');
-    var position = getInputVal('position');
-    var foursquare_ID = getInputVal('foursquare_ID');
+    var self = this;
+    self.name = ko.observable(name);
+    self.position = ko.observable(position);
+    self.foursquare_ID = ko.observable(foursquare_ID);
+
+      self.reset = function(){
+        self.name(null);
+        self.position(null);
+        self.foursquare_ID(null);
+      }
+
+    //var name = getInputVal('name');
+    //var position = getInputVal('position');
+    //var foursquare_ID = getInputVal('foursquare_ID');
 
 
     // Save message
@@ -38,13 +49,13 @@
   },3000);
 
   // Clear form
-  document.getElementById('add-location-form').reset();
-}
+//   document.getElementById('add-location-form').reset();
+  }
 
   // Function to get form values
-  function getInputVal(id){
-    return document.getElementById(id).value;
-  }
+  // function getInputVal(id){
+  //   return document.getElementById(id).value;
+  // }
 
   // Save message to firebase and push to ko observable array
   function saveMessage(name, position, foursquare_ID){
@@ -379,6 +390,8 @@
             }); 
             error: {
                   infowindow.setContent('<div>' + marker.title + '</div>' + '<div>Error:  No Foursquare Data Returned</div>');
+                  // open the infowindow to show error warning to the user
+                  infowindow.open(map, marker);
                   }
               }
       }
