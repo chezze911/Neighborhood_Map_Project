@@ -272,9 +272,14 @@ function initMap() {
 }
 
 mapError = function (msg, url, lineNo, columnNo, error) {
-            var string = msg.toLowerCase();
+            // Create message.
+            var msg;
+            // Set message equal to a string.
+            msg = prompt('mapError Message');
+            // Access string's toLowerCase.
+            msg = msg.toLowerCase();
             var substring = "script error";
-            if (string.indexOf(substring) > -1) {
+            if (msg.indexOf(substring) > -1) {
                 alert('Script Error: See Browser Console for Detail');
             } else {
                 var message = [
@@ -375,7 +380,7 @@ function ViewModel() {
     // track user input
     self.doesMatch = ko.observable("");
     self.filterItems = ko.observableArray(defaultLocations);
-
+    
     self.name = ko.observable("");
     self.position = ko.observable("");
     self.foursquare_ID = ko.observable("");
