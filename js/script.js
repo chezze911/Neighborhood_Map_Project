@@ -397,7 +397,7 @@ function ViewModel() {
           }
           else {
             alert("Please enter text.");
-          };
+          }
 
           // Save message
           saveMessage(name, position, foursquare_ID);
