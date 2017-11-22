@@ -249,9 +249,13 @@ function initMap() {
         // Push the marker to our array of markers.
         markers.push(marker);
         defaultLocations[i].marker = marker;
+
         // Create an onclick event to open the large infowindow at each marker.
         marker.addListener('click', function () {
             populateInfoWindow(this, largeInfowindow);
+            map.panTo(marker.getPosition());
+
+
         });
         // Two event listeners - one for mouseover, one for mouseout,
         // to change the colors back and forth.
