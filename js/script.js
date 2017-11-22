@@ -16,66 +16,6 @@ var messagesRef = firebase.database().ref('messages');
 // Listen for form submit
 document.getElementById("add-location-form");
 
-// Submit form
-// function submitForm(e)
-
-// var ViewModel = function() 
-// {
-//     // e.preventDefault();
-
-//     // Get values
-//     var self = this;
-//     self.name = ko.observable(name);
-//     self.position = ko.observable(position);
-//     self.foursquare_ID = ko.observable(foursquare_ID);
-//     self.addLocationOnSubmit = function(xxx) 
-//     {
-
-//         var valueEntered = JSON.stringify(
-//           {
-//               name: self.name(), 
-//               position: self.position(),
-//               foursquare_ID: self.foursquare_ID()
-//           });
-//           if(valueEntered) {
-//             alert("You entered: " + valueEntered);
-//           }
-//           else {
-//             alert("Please enter text.");
-//           }; 
-//         // Prepare request data
-//         $.post("/echo/json", data, function(response)
-//         {
-//           // on successful callback
-//           self.responseJSON(response);
-//         });
-//     }
-
-
-//     self.reset = function () 
-//     {
-//         self.name(null);
-//         self.position(null);
-//         self.foursquare_ID(null);
-//     };
-
-
-    // Save message
-    saveMessage(name, position, foursquare_ID);
-
-    // Show alert
-    document.querySelector('.alert').style.display = 'block';
-
-    // Hide alert after 3 seconds
-    setTimeout(function () 
-    {
-        document.querySelector('.alert').style.display = 'none';
-    }, 3000);
-
-    // ko.applyBindings(new ViewModel());
-
-// }
-
 
 // Save message to firebase and push to ko observable array
 function saveMessage(name, position, foursquare_ID) {
