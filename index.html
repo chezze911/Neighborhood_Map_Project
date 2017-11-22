@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <header>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
     <link rel="stylesheet" href="css/style.css">
     <title> Neighborhood Project </title>
-  </head>
+  </header>
   <body>
-    <div class="main-container">
+    <nav class="main-container">
       <a id="menu">
           <img class="menu_icon" src="img/menu_icon.svg" alt="svg menu icon">
         </a>
-      <div id="drawer" class="options-box open">
+       <aside id="drawer" class="options-box open">
         <br>
           <h1>Find The Best Vietnamese Food in <br>
            San Jose, CA </h1>
-          <div>
+          <main>
       
             <form>
                 Filter <i class="fa fa-filter" aria-hidden="true"></i><input class= 'filter' type="search" data-bind='textInput: filter' placeholder = "Filter Listings"/>
@@ -29,9 +29,9 @@
 
             <hr>
 
-            <div class="add-location" id="add-location">
+            <section class="add-location" id="add-location">
               <h4> Add a Favorite Location </h4>
-              <div class="alert">Your favorite location has been sent</div>
+              <div class="alert">Your favorite location has been saved</div>
 
               <form data-bind="submit: addLocationOnSubmit" id="add-location-form">
                 <p>
@@ -49,21 +49,23 @@
                 <button type="submit">Save</button>
               </form>
 
-            </div>
+            </section>
 
-          </div>
-        </div>
-      <div id="map" class="map open"></div>
-    </div>
+          </main>
+        </aside>
+      <section id="map" class="map open"></section>
+    </nav>
     
-    <script src ="js/bower_components/knockout/dist/knockout.js"></script>
-    <script src="js/libs/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-    <script src="js/defaultLocations.js"></script>
-    <script src="js/script.js"></script>
-    <script src=
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&libraries=places,geometry&v=3&callback=initMap" async defer onerror="mapError()">
-    </script>
+    <footer>
+      <script src ="js/bower_components/knockout/dist/knockout.js"></script>
+      <script src="js/libs/jquery.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+      <script src="js/defaultLocations.js"></script>
+      <script src="js/script.js"></script>
+      <script src=
+          "https://maps.googleapis.com/maps/api/js?key=AIzaSyDjCAElFYcOXV8qLNFPJz-I79n-p-OU4-0&libraries=places,geometry&v=3&callback=initMap" async defer onerror="mapError()">
+      </script>
+    </footer>
     
 
   </body>
