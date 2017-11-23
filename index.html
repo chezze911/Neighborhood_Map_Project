@@ -22,7 +22,7 @@
                 Filter <i class="fa fa-filter" aria-hidden="true"></i><input class= 'filter' type="search" data-bind='textInput: filter' placeholder = "Filter Listings"/>
                 <ul data-bind="foreach: filterSearchItems">
                   <li>
-                      <a data-bind="text: name, click: $root.bounce"></a>
+                      <button data-bind="text: name, click: $root.bounce"></button>
                   </li>
                 </ul>
             </form>

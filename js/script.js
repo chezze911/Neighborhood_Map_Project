@@ -380,7 +380,14 @@ function ViewModel() {
     // track user input
     self.doesMatch = ko.observable("");
     self.filterItems = ko.observableArray(defaultLocations);
-    
+    // self.filterSearchItems = [
+    //     { isActive: ko.observable(false) },
+    //     { isActive: ko.observable(false) },
+    //     { isActive: ko.observable(false) }
+    //     ];
+    // self.toggleActive = function(data, event){
+    //     data.isActive(!data.isActive());//toggle the isActive value between true/false
+    //    }
     self.name = ko.observable("");
     self.position = ko.observable("");
     self.foursquare_ID = ko.observable("");
@@ -424,7 +431,6 @@ function ViewModel() {
         // allows a single list location to be clicked and triggered on the map
         google.maps.event.trigger(location.marker, "click");
     };
-
 
 
     //ko.utils.arrayFilter - filter the items using the filter text
