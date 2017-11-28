@@ -8,7 +8,7 @@
     <title> Neighborhood Project </title>
   </header>
   <body>
-    <nav class="main-container">
+    <main class="main-container">
       <a id="menu">
           <img class="menu_icon" src="img/menu_icon.svg" alt="svg menu icon">
         </a>
@@ -16,45 +16,43 @@
         <br>
           <h1>Find The Best Vietnamese Food in <br>
            San Jose, CA </h1>
-          <main>
-      
-            <form>
-                Filter <i class="fa fa-filter" aria-hidden="true"></i><input class= 'filter' type="search" data-bind='textInput: filter' placeholder = "Filter Listings"/>
-                <ul data-bind="foreach: filterSearchItems">
-                  <li>
-                      <button data-bind="text: name, click: $root.bounce"></button>
-                  </li>
-                </ul>
+    
+          <form>
+              Filter <i class="fa fa-filter" aria-hidden="true"></i><input class= 'filter' type="search" data-bind='textInput: filter' placeholder = "Filter Listings"/>
+              <ul data-bind="foreach: filterSearchItems">
+                <li>
+                    <button data-bind="text: name, click: $root.bounce"></button>
+                </li>
+              </ul>
+          </form>
+
+          <hr>
+
+          <section class="add-location" id="add-location">
+            <h4> Add a Favorite Location </h4>
+            <div class="alert">Your favorite location has been saved</div>
+
+            <form data-bind="submit: addLocationOnSubmit" id="add-location-form">
+              <p>
+                <label> Name: </label>
+                <input type="text" value=""data-bind="value: name" id="name" required>
+              </p>
+              <p>
+                <label> Position(lat,lon): </label>
+                <input type="text" value=""data-bind="value: position" id="position" required>
+              </p>
+              <p>
+                <label> Foursquare ID: </label>
+                <input type="text" value=""data-bind="value: foursquare_ID" id="foursquare_ID" required>
+              </p>
+              <button type="submit">Save</button>
             </form>
 
-            <hr>
+          </section>
 
-            <section class="add-location" id="add-location">
-              <h4> Add a Favorite Location </h4>
-              <div class="alert">Your favorite location has been saved</div>
-
-              <form data-bind="submit: addLocationOnSubmit" id="add-location-form">
-                <p>
-                  <label> Name: </label>
-                  <input type="text" value=""data-bind="value: name" id="name" required>
-                </p>
-                <p>
-                  <label> Position(lat,lon): </label>
-                  <input type="text" value=""data-bind="value: position" id="position" required>
-                </p>
-                <p>
-                  <label> Foursquare ID: </label>
-                  <input type="text" value=""data-bind="value: foursquare_ID" id="foursquare_ID" required>
-                </p>
-                <button type="submit">Save</button>
-              </form>
-
-            </section>
-
-          </main>
         </aside>
       <section id="map" class="map open"></section>
-    </nav>
+    </main>
     
     <footer>
       <script src ="js/bower_components/knockout/dist/knockout.js"></script>
