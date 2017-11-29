@@ -9,9 +9,9 @@
   </header>
   <body>
     <main class="main-container">
-      <a id="menu">
+      <a data-bind="click: menuIconClick, clickBubble: false" id="menu">
           <img class="menu_icon" src="img/menu_icon.svg" alt="svg menu icon">
-        </a>
+      </a>
        <aside id="drawer" class="options-box open">
         <br>
           <h1>Find The Best Vietnamese Food in <br>
@@ -51,7 +51,7 @@
           </section>
 
         </aside>
-      <section id="map" class="map open"></section>
+      <article id="map" class="map open"></article>
     </main>
     
     <footer>

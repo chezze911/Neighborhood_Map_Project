@@ -70,6 +70,7 @@ html,
       #map {
         bottom: 3px;
         height: 100%;
+        width: 100%;
         left: 323px;
         position: absolute;
         right: 0px;
@@ -108,7 +109,7 @@ html,
         width: 300px;
         height: 100%;
         position: absolute;
-        /* This trasform moves the drawer off canvas. */
+        /* This transform moves the drawer off canvas. */
         -webkit-transform: translate(-323px, 0);
         transform: translate(-323px, 0);
         /* Optionally, we animate the drawer. */

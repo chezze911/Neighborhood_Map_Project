@@ -380,14 +380,10 @@ function ViewModel() {
     // track user input
     self.doesMatch = ko.observable("");
     self.filterItems = ko.observableArray(defaultLocations);
-    // self.filterSearchItems = [
-    //     { isActive: ko.observable(false) },
-    //     { isActive: ko.observable(false) },
-    //     { isActive: ko.observable(false) }
-    //     ];
-    // self.toggleActive = function(data, event){
-    //     data.isActive(!data.isActive());//toggle the isActive value between true/false
-    //    }
+    self.menuIconClick = function(){
+        $('.drawer.open');
+    }
+
     self.name = ko.observable("");
     self.position = ko.observable("");
     self.foursquare_ID = ko.observable("");
