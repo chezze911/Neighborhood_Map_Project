@@ -40,15 +40,15 @@ var menu = document.querySelector('#menu');
 var main = document.querySelector('#map');
 var drawer = document.querySelector('#drawer');
 
-menu.addEventListener('click', function (e) {
-    drawer.classList.toggle('open');
-    main.classList.toggle('open');
-    e.stopPropagation();
-});
+// menu.addEventListener('click', function (e) {
+//     drawer.classList.toggle('open');
+//     main.classList.toggle('open');
+//     e.stopPropagation();
+// });
 
-main.addEventListener('click', function () {
-    drawer.classList.add('open');
-});
+// main.addEventListener('click', function () {
+//     drawer.classList.add('open');
+// });
 
 
 
@@ -381,7 +381,12 @@ function ViewModel() {
     self.doesMatch = ko.observable("");
     self.filterItems = ko.observableArray(defaultLocations);
     self.menuIconClick = function(){
-        $('.drawer.open');
+        $('#drawer').toggle('open');
+        //$('#main').toggle('open');
+
+        // $('#map').add('open');
+        // $('#map').toggle('#drawer.open');
+        $('#map').toggle('open');
     }
 
     self.name = ko.observable("");
