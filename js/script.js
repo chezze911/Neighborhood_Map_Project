@@ -36,21 +36,6 @@ var map;
 var markers = [];
 
 
-var menu = document.querySelector('#menu');
-var main = document.querySelector('#map');
-var drawer = document.querySelector('#drawer');
-
-// menu.addEventListener('click', function (e) {
-//     drawer.classList.toggle('open');
-//     main.classList.toggle('open');
-//     e.stopPropagation();
-// });
-
-// main.addEventListener('click', function () {
-//     drawer.classList.add('open');
-// });
-
-
 
 function initMap() {
     // Create a styles array to use with the map.
@@ -382,10 +367,7 @@ function ViewModel() {
     self.filterItems = ko.observableArray(defaultLocations);
     self.menuIconClick = function(){
         $('#drawer').toggle('open');
-        //$('#main').toggle('open');
-
-        // $('#map').add('open');
-        // $('#map').toggle('#drawer.open');
+        
         $('#map').toggle('open');
     }
 
