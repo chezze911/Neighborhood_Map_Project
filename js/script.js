@@ -257,12 +257,10 @@ function initMap() {
 }
 
 mapError = function (msg, url, lineNo, columnNo, error) {
-            // Create message.
-            var msg;
-            // Set message equal to a string.
-            msg = prompt('mapError Message');
+            // Create message and set message error equal to a string
+            var msg_error = prompt('mapError Message');
             // Access string's toLowerCase.
-            msg = msg.toLowerCase();
+            msg = msg_error.toLowerCase();
             var substring = "script error";
             if (msg.indexOf(substring) > -1) {
                 alert('Script Error: See Browser Console for Detail');
@@ -367,9 +365,9 @@ function ViewModel() {
     self.filterItems = ko.observableArray(defaultLocations);
     self.menuIconClick = function(){
         $('#drawer').toggle('open');
-        
+
         $('#map').toggle('open');
-    }
+    };
 
     self.name = ko.observable("");
     self.position = ko.observable("");
