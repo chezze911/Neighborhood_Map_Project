@@ -115,28 +115,10 @@ function initMap() {
 
 }
 
-mapError = function (msg, url, lineNo, columnNo, error) {
-            // Create message and set message error equal to a string
-            var msg_error = prompt('mapError Message');
-            // Access string's toLowerCase.
-            msg = msg_error.toLowerCase();
-            var substring = "script error";
-            if (msg.indexOf(substring) > -1) {
-                alert('Script Error: See Browser Console for Detail');
-            } else {
-                var message = [
-                    'Message: ' + msg,
-                    'URL: ' + url,
-                    'Line: ' + lineNo,
-                    'Column: ' + columnNo,
-                    'Error object: ' + JSON.stringify(error)
-                ].join(' - ');
 
-                alert(message);
-            }
-
-            return false;
-        };
+function mapError() {        
+            alert('Script Error: Google Maps has failed to load.');
+};
 
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
