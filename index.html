@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <header>
+  <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <title> Neighborhood Project </title>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
     <link rel="stylesheet" href="css/style.css">
-    <title> Neighborhood Project </title>
-  </header>
+  </head>
   <body>
     <main class="main-container">
       <a data-bind="click: menuIconClick, clickBubble: false" id="menu">
@@ -35,15 +35,15 @@
             <form data-bind="submit: addLocationOnSubmit" id="add-location-form">
               <p>
                 <label> Name: </label>
-                <input type="text" value=""data-bind="value: name" id="name" required>
+                <input type="text" value="" data-bind="value: name" id="name" required>
               </p>
               <p>
                 <label> Position(lat,lon): </label>
-                <input type="text" value=""data-bind="value: position" id="position" required>
+                <input type="text" value="" data-bind="value: position" id="position" required>
               </p>
               <p>
                 <label> Foursquare ID: </label>
-                <input type="text" value=""data-bind="value: foursquare_ID" id="foursquare_ID" required>
+                <input type="text" value="" data-bind="value: foursquare_ID" id="foursquare_ID" required>
               </p>
               <button type="submit">Save</button>
             </form>
@@ -51,7 +51,7 @@
           </section>
 
         </aside>
-      <article data-bind="css:{'#map':menuIconClick}" id="map"></article>
+      <section data-bind="css:{'#map':menuIconClick}" id="map"><h4>Google Maps is loading...</h4></section>
     </main>
     
     <footer>

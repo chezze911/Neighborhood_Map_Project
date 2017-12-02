@@ -118,7 +118,7 @@ function initMap() {
 
 function mapError() {        
             alert('Script Error: Google Maps has failed to load.');
-};
+}
 
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
@@ -204,11 +204,12 @@ function ViewModel() {
     // track user input
     self.doesMatch = ko.observable("");
     self.filterItems = ko.observableArray(defaultLocations);
+    self.menuIconClick = ko.observable(true);
     self.menuIconClick = function(){
         $('#drawer').toggleClass('open');
 
         $('#map').toggleClass('fullscreen');
-    };
+    }
 
     self.name = ko.observable("");
     self.position = ko.observable("");
