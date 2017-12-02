@@ -205,9 +205,9 @@ function ViewModel() {
     self.doesMatch = ko.observable("");
     self.filterItems = ko.observableArray(defaultLocations);
     self.menuIconClick = function(){
-        $('#drawer').toggle('open');
+        $('#drawer').toggleClass('open');
 
-        $('#map').toggle('open');
+        $('#map').toggleClass('fullscreen');
     };
 
     self.name = ko.observable("");
